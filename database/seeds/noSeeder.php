@@ -12,12 +12,17 @@ class noSeeder extends Seeder {
      */
     public function run()
     {
-        DB::table('no')->insert([
+        foreach(range(1,1000) as $no)
+        {
+            DB::table('no')->insert([
 
-            'user_id' => rand(1,5),
-            'description' => 'I said NO to this and I\'m proud',
-            'added_on' => date("Y-m-d H:i:s", rand())
-        ]);
+                'user_id' => rand(1,100),
+                'description' => 'I said NO to this and I\'m proud',
+                'created_at' => date("Y-m-d H:i:s"),
+                'updated_at' => date("Y-m-d H:i:s")
+            ]);
+        }
+
     }
 
 } 

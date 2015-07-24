@@ -14,10 +14,10 @@ class FactSeeder extends Seeder
 
     public function run()
     {
-        for($i=0; $i<100; $i++)
+        for($i=0; $i<1000; $i++)
         {
             $fact = new \App\Models\Fact();
-            $fact->user_id = rand(1, 8);
+            $fact->user_id = rand(1, 100);
             $fact->fact = $this->dummyText;
             $fact->save();
         }
