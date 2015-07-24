@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 Route::get('/noButton', function(){
 
@@ -23,9 +23,15 @@ Route::group(['prefix' => 'api/v1'], function(){
 
     Route::resource('no','NoController');
     Route::resource('fact', 'FactController');
+    Route::resource('tag', 'TagController');
+    Route::resource('taggedFact', 'TaggedFactController');
 });
 
 route::get('/facts', function(){
    return view('practice.factHome');
+});
+
+route::get('/', function(){
+   return view('home');
 });
 

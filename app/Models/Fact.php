@@ -10,6 +10,13 @@ class Fact extends Model {
     protected $fillable = ['user_id', 'fact'];
 
 
+    public function tags()
+    {
+        return $this->belongsToMany('App\Models\Tag', 'facts_tags');
+    }
 
-
+    public function taggedFact()
+    {
+        return $this->hasMany('App\Models\TaggedFact');
+    }
 } 
