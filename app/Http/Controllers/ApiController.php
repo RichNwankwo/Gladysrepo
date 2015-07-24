@@ -3,7 +3,7 @@
 
 namespace App\Http\Controllers;
 
-
+// TODO set all the custom status code
 
 class ApiController extends Controller {
 

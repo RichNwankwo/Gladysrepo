@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNoTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,13 @@ class CreateNoTable extends Migration
      */
     public function up()
     {
-        // Creates the no table
-        Schema::create('no', function(Blueprint $table){
+        // Creates the tag table
+        Schema::create('tag', function(Blueprint $table){
 
             $table->increments('id')->unsigned();
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->string('description');
+            $table->string('tag_name');
             $table->timestamps();
         });
-
 
     }
 
@@ -32,8 +29,8 @@ class CreateNoTable extends Migration
      */
     public function down()
     {
-        //deletes the no table
+        // Drops the tag table
+        Schema::drop('tag');
 
-        Schema::drop('no');
     }
 }
