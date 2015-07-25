@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\GladysApp\Transformers\TagTransformer;
+use App\Models\Fact;
 use App\Models\Tag;
 
 use Illuminate\Http\Request;
@@ -25,13 +26,24 @@ class TagController extends ApiController
     }
 
 
-    public function index()
+    /**
+     * @param null $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index($factId = null)
     {
-        //Gets all the tags
-        $tags = Tag::all();
-        return $this->respond([
-            'data' => $this->tagTransformer->transformCollection($tags->toArray())
+        $tags = $this->getTags($factId);
+        if(is_null($tags))
+        {
+            return $this->setStatusCode('404')->respondNotFound('Data not found');
+        }
+        else
+        {
+            return $this->respond([
+                'data' => $this->tagTransformer->transformCollection($tags->toArray())
             ]);
+        }
+
     }
 
     /**
@@ -110,5 +122,23 @@ class TagController extends ApiController
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @param $factId
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getTags($factId)
+    {
+        if( ! is_null($factId))
+        {
+            $fact = Fact::find($factId);
+            $fact ? $tags = $fact->tags : $tags = null;
+        }
+        else
+        {
+            $tags = Tag::all();
+        }
+        return $tags;
     }
 }

@@ -18,15 +18,19 @@
     },
     "autoload": {
         "classmap": [
-            "database"
+            "database",
+            "app/Models"
         ],
         "psr-4": {
             "App\\": "app/"
+
         }
     },
     "autoload-dev": {
         "classmap": [
-            "tests/TestCase.php"
+            "tests/TestCase.php",
+            "tests/helpers/",
+            "app/Models"
         ]
     },
     "scripts": {

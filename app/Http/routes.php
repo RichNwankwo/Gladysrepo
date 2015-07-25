@@ -21,10 +21,10 @@ Route::get('/noButton', function(){
 
 Route::group(['prefix' => 'api/v1'], function(){
 
+    Route::get('fact/{id}/tag', 'TagController@index');
     Route::resource('no','NoController');
     Route::resource('fact', 'FactController');
     Route::resource('tag', 'TagController');
-    Route::resource('taggedFact', 'TaggedFactController');
 });
 
 route::get('/facts', function(){
@@ -32,6 +32,7 @@ route::get('/facts', function(){
 });
 
 route::get('/', function(){
+//    return "Laravel 5";
    return view('home');
 });
 
