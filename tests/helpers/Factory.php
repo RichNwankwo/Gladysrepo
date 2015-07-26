@@ -26,10 +26,37 @@ trait Factory {
         }
     }
 
+    /**
+     * Creates a related model
+     * @param $type The model class
+     * @param $method the related model method
+     * @param $related_model the related model object
+     */
+    protected function makeRelatedModel($type, $method, $related_model)
+    {
+        $this->make($type);
+        $model = $type::find(1);
+        if(is_array($related_model))
+        {
+            $model->$method()->saveMany($related_model);
+        }
+        else
+        {
+            $model->$method()->save($related_model);
+        }
+
+
+    }
+
+    /**
+     * Abstract function to get a mock object
+     */
     protected  function getStub()
     {
         throw new BadMethodCallException('Create your own getStub method to declare your fields');
     }
+
+
 
 
 } 

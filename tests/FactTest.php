@@ -37,6 +37,27 @@ class FactTest extends resourceTester {
         $this->format =  $transformer->format;
     }
 
+    public function testIf_Tag_Resources_Nested_Properly()
+    {
+        //arrange
+        $url = $this->resource.'/1/tag';
+        $tags = [
+            new App\Models\Tag(['tag_name'=>'Same Tag']),
+            new App\Models\Tag(['tag_name'=>'Same Tag']),
+            new App\Models\Tag(['tag_name'=>'Same Tag'])
+            ];
+        $this->makeRelatedModel($this->model,'tags', $tags);
+
+        //act
+
+        $resource = $this->getJson($url)->data;
+
+        //assert
+        $this->assertResponseOk();
+        $this->assertObjectHasAttribute('tag_name', $resource[0]);
+
+    }
+
 
     public function getStub()
     {
