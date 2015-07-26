@@ -33,7 +33,6 @@ class resourceTester extends ApiTester{
         $this->make($this->model);
         $this->getJson($this->specificResource);
         $this->assertResponseOk();
-
     }
 
     public function testIf_data_is_transformed()

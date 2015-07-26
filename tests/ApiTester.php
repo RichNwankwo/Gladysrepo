@@ -19,6 +19,12 @@ abstract class ApiTester extends TestCase {
         Artisan::call('migrate');
     }
 
+    /**
+     * @param string $url path to resource
+     * @param string $method HTTP method verb
+     * @param array $parameters parameters to be passed with request
+     * @return mixed
+     */
     public function getJson($url, $method = "GET", $parameters= [])
     {
         return json_decode($this->call($method, $url, $parameters)->getContent());

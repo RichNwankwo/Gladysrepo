@@ -10,23 +10,7 @@ include_once('tests/resourceTester.php');
 
 class FactTest extends resourceTester {
 
-    /**
-     * The path to the model resource represents
-     * @var string
-     */
     protected $model = 'App\Models\Fact';
-
-    /**
-     * path to uri resource segment
-     * @var string
-     */
-
-    /**
-     * api url
-     * @var string
-     */
-
-
 
     public function setUp()
     {
