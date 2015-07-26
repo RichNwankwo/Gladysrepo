@@ -6,6 +6,9 @@ namespace App\GladysApp\Transformers;
 
 class FactTransformer extends Transformer {
 
+
+    public $format = ['user_id', 'fact', 'added_on'];
+
     public function transform($fact)
     {
         return [

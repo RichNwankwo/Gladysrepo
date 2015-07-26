@@ -1,5 +1,19 @@
 <?php
 
+if ($app->environment('local'))
+{
+    // The environment is local
+    $db = 'mysql';
+}
+elseif($app->environment('testing'))
+{
+    $db = 'sqlite';
+}
+else
+{
+    $db = 'mysql';
+}
+
 return [
 
     /*
@@ -26,7 +40,8 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => $db,
+//      'default' =>  'sqlite',
 
     /*
     |--------------------------------------------------------------------------
@@ -48,7 +63,7 @@ return [
 
         'sqlite' => [
             'driver'   => 'sqlite',
-            'database' => storage_path('database.sqlite'),
+            'database' => ':memory:',
             'prefix'   => '',
         ],
 

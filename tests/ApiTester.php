@@ -16,7 +16,7 @@ abstract class ApiTester extends TestCase {
     public function setUp()
     {
         parent::setUp();
-        $this->artisan('migrate');
+        Artisan::call('migrate');
     }
 
     public function getJson($url, $method = "GET", $parameters= [])

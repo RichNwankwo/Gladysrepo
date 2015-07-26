@@ -6,22 +6,37 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-include_once('tests/ApiTester.php');
+include_once('tests/resourceTester.php');
 
-class FactTest extends ApiTester {
-    use Factory;
+class FactTest extends resourceTester {
 
-    public function testIf_it_returns_facts()
+    /**
+     * The path to the model resource represents
+     * @var string
+     */
+    protected $model = 'App\Models\Fact';
+
+    /**
+     * path to uri resource segment
+     * @var string
+     */
+
+    /**
+     * api url
+     * @var string
+     */
+
+
+
+    public function setUp()
     {
-        // arrange
-        $this->times(5)->make('App\Models\Fact');
-
-        // act
-        $this->getJson('api/v1/fact');
-
-        // assert
-        $this->assertResponseOk();
+        parent::setUp();
+        $this->resource = $this->apiUrl.'fact';
+        $this->specificResource = $this->resource.'/1';
+        $transformer = new \App\GladysApp\Transformers\FactTransformer();
+        $this->format =  $transformer->format;
     }
+
 
     public function getStub()
     {
@@ -30,6 +45,7 @@ class FactTest extends ApiTester {
             'fact' => $this->fake->paragraph
         ];
     }
+
 
 
 }
