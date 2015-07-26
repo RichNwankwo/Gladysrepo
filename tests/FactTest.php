@@ -42,6 +42,19 @@ class FactTest extends resourceTester {
 
     }
 
+    public function testIf_error_thrown_when_validation_fails()
+    {
+        //arrange
+        $fact = ['user_id'=> 1, 'fact'=>''];
+
+        //act
+        $this->getJson($this->resource, "POST", $fact);
+
+
+        //assert
+        $this->assertResponseStatus(302);
+    }
+
 
     public function getStub()
     {
@@ -50,6 +63,8 @@ class FactTest extends resourceTester {
             'fact' => $this->fake->paragraph
         ];
     }
+    
+    
 
 
 

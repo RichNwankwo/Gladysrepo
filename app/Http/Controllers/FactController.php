@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\GladysApp\Transformers\FactTransformer;
+use App\Http\Requests\FactGetRequest;
+use App\Http\Requests\FactPostRequest;
 use App\Models\Fact;
 
 use Illuminate\Http\Request;
@@ -27,7 +29,7 @@ class FactController extends ApiController
 
     /**
      * Display a listing of the resource.
-     *
+     * @param  FactGetRequest  $request
      * @return Response
      */
     public function index()
@@ -50,10 +52,10 @@ class FactController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  FactPostRequest  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(FactPostRequest $request)
     {
         //
         if(! $request->input('fact'))
