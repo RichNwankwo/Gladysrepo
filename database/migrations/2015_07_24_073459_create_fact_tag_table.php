@@ -20,7 +20,7 @@ class CreateFactTagTable extends Migration
             $table->foreign('fact_id')->references('id')->on('fact');
             $table->integer('tag_id')->unsigned();
             $table->foreign('tag_id')->references('id')->on('tag');
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 
