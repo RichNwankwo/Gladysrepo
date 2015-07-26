@@ -21,7 +21,7 @@ abstract class ApiTester extends TestCase {
 
     public function getJson($url, $method = "GET", $parameters= [])
     {
-        return json_decode($this->call("$method", $url, $parameters)->getContent());
+        return json_decode($this->call($method, $url, $parameters)->getContent());
     }
 
 

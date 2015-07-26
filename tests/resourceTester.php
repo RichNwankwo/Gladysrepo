@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+
 include_once('tests/ApiTester.php');
 class resourceTester extends ApiTester{
 
@@ -70,6 +71,23 @@ class resourceTester extends ApiTester{
         }
     }
 
+    public function testIf_resource_is_created_successfully()
+    {
+        //arrange
+        $mock_model = $this->getStub();
+        $model_class = $this->model;
+
+        //act
+        $this->getJson($this->resource,"POST", $mock_model);
+
+        //assert
+        $this->assertResponseOk();
+        $inserted_model  = $model_class::find(DB::getPdo()->lastInsertId());
+        $this->assertModelMatchesStub($mock_model, $inserted_model);
+
+    }
+
+
     public function assertObjectHasAttributes($resource, array $attributes)
     {
         foreach($attributes as $attribute)
@@ -78,5 +96,17 @@ class resourceTester extends ApiTester{
         }
     }
 
+    /**
+     * Tests if model a stub and model match data
+     * @param $mock_model
+     * @param $model
+     */
+    public function assertModelMatchesStub($mock_model, $model)
+    {
+        foreach($model as $field => $value) {
+            $this->assertEquals($value, $model->$field);
+        }
+    }
 
-} 
+
+}

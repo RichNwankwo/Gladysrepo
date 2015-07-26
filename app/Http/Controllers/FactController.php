@@ -22,7 +22,7 @@ class FactController extends ApiController
     {
         $this->factTransformer = $factTransformer;
 
-        $this->middleware('auth.basic', ['only'=>'store']);
+//        $this->middleware('auth.basic', ['only'=>'store']);
     }
 
     /**
@@ -62,9 +62,8 @@ class FactController extends ApiController
         }
         else
         {
-            $id = Auth::user()->id;
-            Fact::create(['user_id' => $id, 'fact' => $request->input('fact')]);
-            return $this->respond(['message'=> 'Fact successfully Stored']);
+            Fact::create(['user_id' => $request->input('user_id'), 'fact' => $request->input('fact')]);
+            return $this->setStatusCode(200)->respond(['message'=> 'Fact successfully Stored']);
         }
     }
 

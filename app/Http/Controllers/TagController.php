@@ -65,6 +65,15 @@ class TagController extends ApiController
     public function store(Request $request)
     {
         //
+        if( ! $request->input('tag_name'))
+        {
+            return $this->setStatusCode('402')->respondWithError('Invalid Data Request');
+        }
+        else
+        {
+            Tag::create(['tag_name' => $request->input('tag_name')]);
+            return $this->setStatusCode('200')->respond(['message'=> 'Tag successfully Stored']);
+        }
     }
 
     /**
