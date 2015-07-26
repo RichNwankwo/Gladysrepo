@@ -7,6 +7,9 @@ use App\Models\User;
 
 
 class NoTransformer extends Transformer{
+
+    public $format = ['description', 'user'];
+
     public function transform($no)
     {
         return [

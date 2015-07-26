@@ -8,7 +8,6 @@ class No extends Model{
 
     protected $table = 'no';
     protected $fillable = ['user_id', 'description'];
-    protected $timestamps = FALSE;
 
     public function user()
     {

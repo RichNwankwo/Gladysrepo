@@ -58,6 +58,15 @@ class NoController extends ApiController
     public function store(Request $request)
     {
         //
+        if(! $request->input('user_id') || ! $request->input('description'))
+        {
+            return $this->setStatusCode(402)->respondWithError('Unable to accept data');
+        }
+        else
+        {
+            No::create(['user_id'=>$request->input('user_id'), 'description' => $request->input('description') ]);
+            return $this->setStatusCode(200)->respond('Data processed');
+        }
     }
 
     /**
