@@ -1,4 +1,7 @@
 var elixir = require('laravel-elixir');
+    gulp = require('gulp'),
+    jade = require('gulp-jade-php'),
+    util = require('gulp-util');
 
 /*
  |--------------------------------------------------------------------------
@@ -13,5 +16,15 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     //mix.sass('app.scss');
-     mix.phpUnit();
+    gulp.task('jade', function(){
+        gulp.src('resources/assets/jade/**/*.jade')
+            .pipe(jade({
+                pretty: !util.env.production
+            }))
+            .pipe(gulp.dest('resources/views/'));
+    })
+    mix.sass('app.scss');
+    mix.phpUnit();
+    mix.coffee();
+    mix.task('jade', 'resources/assets/jade/**/*.jade');
 });

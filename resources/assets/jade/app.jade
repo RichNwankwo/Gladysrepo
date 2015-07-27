@@ -1,0 +1,34 @@
+doctype html
+
+html
+    head
+        meta(http-equiv="Content-Type", content="text/html; charset=utf-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge, chrome=1")
+        title Gladys - Learning Tool
+    body
+        section
+            ul.nav.nav-tabs
+                li.active Home
+                li Facts
+                li Questions
+
+        h1 Gladys
+        section
+            p POST api/v1/Fact/
+            form(action="api/v1/fact", method="POST")
+                input(type="hidden", name="_token", value="<?php echo csrf_token();?>")
+                div
+                    label(for="fact") Fact:
+                    input#fact(type="text", name="fact")
+                button(type="submit") Submit
+        section
+            p GET app/v1/fact/
+            a(href="api/v1/fact") Get all facts
+
+        section
+            p Get fact
+            a(href="api/v1/fact/1") Get fact with id = 1
+
+
+
+

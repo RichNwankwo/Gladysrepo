@@ -33,6 +33,6 @@ route::get('/facts', function(){
 
 route::get('/', function(){
 //    return "Laravel 5";
-   return view('home');
+   return view('app');
 });
 
