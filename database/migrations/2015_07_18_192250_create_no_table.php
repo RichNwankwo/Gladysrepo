@@ -19,7 +19,7 @@ class CreateNoTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('description');
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
 
 
@@ -33,7 +33,6 @@ class CreateNoTable extends Migration
     public function down()
     {
         //deletes the no table
-
         Schema::drop('no');
     }
 }

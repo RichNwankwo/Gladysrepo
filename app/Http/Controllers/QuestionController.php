@@ -1,40 +1,35 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\GladysApp\Transformers\FactTransformer;
-use App\Models\Fact;
 
+use App\Models\Question;
 use Illuminate\Http\Request;
+use App\GladysApp\Transformers\QuestionTransformer;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Auth;
-class FactController extends ApiController
+use Illuminate\Support\Facades\DB as DB;
+
+class QuestionController extends ApiController
 {
+    protected $questionTransformer;
 
-    /**
-     * @var App\GladysApp\Transformers\FactTransformer
-     */
-    protected $factTransformer;
-
-    function __construct(FactTransformer $factTransformer)
+    function __construct(QuestionTransformer $questionTransformer)
     {
-        $this->factTransformer = $factTransformer;
+        $this->questionTransformer = $questionTransformer;
 
-        $this->middleware('auth.basic', ['only'=>'store']);
+//        $this->middleware('auth.basic', ['only'=>'store']);
     }
-
     /**
      * Display a listing of the resource.
-     * @param  FactGetRequest  $request
+     *
      * @return Response
      */
     public function index()
     {
-        $facts = Fact::all();
+        $facts = Question::all();
         return $this->respond([
-            'data' => $this->factTransformer->transformCollection($facts->toArray())]);
+            'data' => $this->questionTransformer->transformCollection($facts->toArray())]);
     }
 
     /**
@@ -50,19 +45,21 @@ class FactController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  FactPostRequest  $request
+     * @param  Request  $request
      * @return Response
      */
     public function store(Request $request)
     {
         //
-        if(! $request->input('fact'))
+        if(! $request->input('question_title') || !$request->input('question_type'))
         {
             return $this->respondUnprocessed();
         }
         else
         {
-            Fact::create(['user_id' => $request->input('user_id'), 'fact' => $request->input('fact')]);
+            Question::create(['question_title' => $request->input('question_title'),
+                'question_type' => $request->input('question_type'),
+                'fact_id' => $request->input('fact_id')]);
             return $this->respondCreated("Data successfully created");
         }
     }
@@ -76,15 +73,15 @@ class FactController extends ApiController
     public function show($id)
     {
         //
-        $fact = Fact::find($id);
-        if(!$fact)
+        $question = Question::find($id);
+        if(!$question)
         {
             return $this->respondNotFound('Item Not Found');
         }
         else
         {
             return $this->respond([
-                'data' => $this->factTransformer->transform($fact)
+                'data' => $this->questionTransformer->transform($question)
             ]);
         }
 

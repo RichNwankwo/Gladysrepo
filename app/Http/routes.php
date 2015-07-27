@@ -25,6 +25,8 @@ Route::group(['prefix' => 'api/v1'], function(){
     Route::resource('no','NoController');
     Route::resource('fact', 'FactController');
     Route::resource('tag', 'TagController');
+    Route::resource('answer', 'QuestionAnswerController');
+    Route::resource('question', 'QuestionController');
 });
 
 route::get('/facts', function(){

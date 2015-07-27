@@ -17,7 +17,7 @@ class CreateCategoriesTable extends Migration
 
             $table->increments('id')->unsigned();
             $table->string('tag_name');
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
 
     }
