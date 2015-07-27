@@ -12,6 +12,7 @@ class FactTest extends resourceTester {
 
     protected $model = 'App\Models\Fact';
 
+
     public function setUp()
     {
         parent::setUp();
@@ -19,6 +20,7 @@ class FactTest extends resourceTester {
         $this->specificResource = $this->resource.'/1';
         $transformer = new \App\GladysApp\Transformers\FactTransformer();
         $this->format =  $transformer->format;
+        $this->authorization_needed = TRUE;
     }
 
     public function testIf_Tag_Resources_Nested_Properly()
@@ -46,13 +48,17 @@ class FactTest extends resourceTester {
     {
         //arrange
         $fact = ['user_id'=> 1, 'fact'=>''];
+        if($this->authorization_needed === TRUE)
+        {
+            $this->authorizeTestUser();
+        }
 
         //act
         $this->getJson($this->resource, "POST", $fact);
 
 
         //assert
-        $this->assertResponseStatus(302);
+        $this->assertResponseStatus(422);
     }
 
 

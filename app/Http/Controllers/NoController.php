@@ -65,7 +65,7 @@ class NoController extends ApiController
         else
         {
             No::create(['user_id'=>$request->input('user_id'), 'description' => $request->input('description') ]);
-            return $this->setStatusCode(200)->respond('Data processed');
+            return $this->respondCreated("Data successfully added");
         }
     }
 

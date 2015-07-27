@@ -10,11 +10,40 @@ class resourceTester extends ApiTester{
 
     use Factory;
 
+    /**
+     * @var string
+     */
     protected $apiUrl = 'api/v1/';
+    /**
+     * @var resource URL
+     */
     protected $resource;
+    /**
+     * @var URL to specific resource
+     */
     protected $specificResource;
+    /**
+     * @var Model used in resource
+     */
     protected $model;
+    /**
+     * @var Format data is transformed to
+     */
     protected $format = null;
+
+    /**
+     * @var bool Is auth needed to access data
+     */
+    protected $authorization_needed = FALSE;
+
+//    public function setUp()
+//    {
+//        parent::setUp();
+//        if($this->authorization_needed === TRUE)
+//        {
+//            $this->authorizeTestUser();
+//        }
+//    }
 
     public function testIf_it_returns_all_resources()
     {
@@ -75,12 +104,17 @@ class resourceTester extends ApiTester{
         //arrange
         $mock_model = $this->getStub();
         $model_class = $this->model;
+        if($this->authorization_needed === TRUE)
+        {
+            $this->authorizeTestUser();
+        }
+
 
         //act
         $this->getJson($this->resource,"POST", $mock_model);
 
         //assert
-        $this->assertResponseOk();
+        $this->assertResponseStatus('201');
         $inserted_model  = $model_class::find(DB::getPdo()->lastInsertId());
         $this->assertModelMatchesStub($mock_model, $inserted_model);
 
@@ -105,6 +139,19 @@ class resourceTester extends ApiTester{
         foreach($model as $field => $value) {
             $this->assertEquals($value, $model->$field);
         }
+    }
+
+    /**
+     * @return array
+     */
+    protected function authorizeTestUser()
+    {
+        $user = new App\Models\User([
+            'name' => 'Test User',
+            'email' => 'testing@testing.com',
+            'password' => Hash::make('testing')
+        ]);
+        $this->be($user);
     }
 
 

@@ -35,7 +35,7 @@ class TagController extends ApiController
         $tags = $this->getTags($factId);
         if(is_null($tags))
         {
-            return $this->setStatusCode('404')->respondNotFound('Data not found');
+            return $this->respondNotFound();
         }
         else
         {
@@ -67,12 +67,12 @@ class TagController extends ApiController
         //
         if( ! $request->input('tag_name'))
         {
-            return $this->setStatusCode('402')->respondWithError('Invalid Data Request');
+            return $this->respondUnprocessed();
         }
         else
         {
             Tag::create(['tag_name' => $request->input('tag_name')]);
-            return $this->setStatusCode('200')->respond(['message'=> 'Tag successfully Stored']);
+            return $this->respondCreated();
         }
     }
 
@@ -89,7 +89,7 @@ class TagController extends ApiController
 
         if( ! $tag )
         {
-            return $this->setStatusCode('404')->respondNotFound('Data not found');
+            return $this->respondNotFound();
         }
         else
         {

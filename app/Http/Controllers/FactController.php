@@ -24,7 +24,7 @@ class FactController extends ApiController
     {
         $this->factTransformer = $factTransformer;
 
-//        $this->middleware('auth.basic', ['only'=>'store']);
+        $this->middleware('auth.basic', ['only'=>'store']);
     }
 
     /**
@@ -55,17 +55,17 @@ class FactController extends ApiController
      * @param  FactPostRequest  $request
      * @return Response
      */
-    public function store(FactPostRequest $request)
+    public function store(Request $request)
     {
         //
         if(! $request->input('fact'))
         {
-            return $this->setStatusCode(422)->respondwithError("Could not create validate request");
+            return $this->respondUnprocessed();
         }
         else
         {
             Fact::create(['user_id' => $request->input('user_id'), 'fact' => $request->input('fact')]);
-            return $this->setStatusCode(200)->respond(['message'=> 'Fact successfully Stored']);
+            return $this->respondCreated("Data successfully created");
         }
     }
 
