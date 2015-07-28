@@ -12,7 +12,8 @@ class QuestionAnswerTransformer extends Transformer {
     {
         return [
             'question_id' => $questionAnswer['question_id'],
-            'answer' => $questionAnswer['answer']
+            'answer' => $questionAnswer['answer'],
+            'checked' => (boolean) $questionAnswer['checked']
         ];
     }
 

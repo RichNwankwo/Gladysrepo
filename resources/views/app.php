@@ -1,36 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" ng-app>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-    <link rel="stylesheet" href="/css/app.css">
-    <title>Gladys - Learning Tool</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Gladys</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/">
+    <link rel="stylesheet" href="css/app.css">
   </head>
-  <body>
-    <section>
-      <ul class="nav nav-tabs">
-        <li class="active">Home</li>
-        <li>Facts</li>
-        <li>Questions</li>
-      </ul>
+  <body ng-controller="FactController">
+    <section class="jumbotron">
+      <h1>Facts</h1><small ng-if="answered()">{{ answered() }} Correct</small>
     </section>
-    <h1>Gladys</h1>
     <section>
-      <p>POST api/v1/Fact/</p>
-      <form action="api/v1/fact" method="POST">
-        <input type="hidden" name="_token" value="&lt;?php echo csrf_token();?&gt;">
-        <div>
-          <label for="fact">Fact:</label>
-          <input id="fact" type="text" name="fact">
-        </div>
-        <button type="submit">Submit</button>
+      <input type="text" placeholder="Filter Answered" ng-model="search">
+      <ul>
+        <li ng-repeat="fact in facts | filter:search">{{ fact.answer }}
+          <input type="checkbox" ng-model="fact.checked">
+        </li>
+      </ul>
+      <form ng-submit="addAnswer()">
+        <input type="text" placeholder="add new answer" ng-model="newAnswerText">
+        <button type="submit">Add new Answer</button>
       </form>
     </section>
-    <section>
-      <p>GET app/v1/fact/</p><a href="api/v1/fact">Get all facts</a>
-    </section>
-    <section>
-      <p>Get fact</p><a href="api/v1/fact/1">Get fact with id = 1</a>
-    </section>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
+    <script src="js/main.js"></script>
   </body>
 </html>

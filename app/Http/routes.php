@@ -29,12 +29,12 @@ Route::group(['prefix' => 'api/v1'], function(){
     Route::resource('question', 'QuestionController');
 });
 
-route::get('/facts', function(){
-   return view('practice.factHome');
-});
-
-route::get('/', function(){
-//    return "Laravel 5";
+Route::get('/', function(){
    return view('app');
 });
+
+Route::get('faqs', function(){
+    return \App\Models\QuestionAnswer::all();
+});
+
 

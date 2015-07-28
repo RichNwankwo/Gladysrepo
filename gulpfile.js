@@ -15,7 +15,7 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    //mix.sass('app.scss');
+    mix.sass('app.scss');
     gulp.task('jade', function(){
         gulp.src('resources/assets/jade/**/*.jade')
             .pipe(jade({
@@ -23,7 +23,6 @@ elixir(function(mix) {
             }))
             .pipe(gulp.dest('resources/views/'));
     })
-    mix.sass('app.scss');
     mix.phpUnit();
     mix.coffee();
     mix.task('jade', 'resources/assets/jade/**/*.jade');

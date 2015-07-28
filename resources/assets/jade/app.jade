@@ -1,36 +1,27 @@
 doctype html
 
-html
+html(lang="en" ng-app)
     head
-        meta(http-equiv="Content-Type", content="text/html; charset=utf-8")
-        meta(http-equiv="X-UA-Compatible", content="IE=edge, chrome=1")
-        link(rel='stylesheet', href='/css/app.css')
-        title Gladys - Learning Tool
-
-    body
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        title Gladys
+        meta(name="description", content="")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        base(href="/")
+        link(rel="stylesheet" href='css/app.css')
+    body(ng-controller="FactController")
+        section.jumbotron
+            h1 Facts
+            small(ng-if="answered()") {{ answered() }} Correct
         section
-            ul.nav.nav-tabs
-                li.active Home
-                li Facts
-                li Questions
-
-        h1 Gladys
-        section
-            p POST api/v1/Fact/
-            form(action="api/v1/fact", method="POST")
-                input(type="hidden", name="_token", value="<?php echo csrf_token();?>")
-                div
-                    label(for="fact") Fact:
-                    input#fact(type="text", name="fact")
-                button(type="submit") Submit
-        section
-            p GET app/v1/fact/
-            a(href="api/v1/fact") Get all facts
-
-        section
-            p Get fact
-            a(href="api/v1/fact/1") Get fact with id = 1
-
-
+            input(type="text" placeholder="Filter Answered" ng-model="search")
+            ul
+                li(ng-repeat="fact in facts | filter:search") {{ fact.answer }}
+                    input(type="checkbox" ng-model="fact.checked")
+            form(ng-submit="addAnswer()")
+                input(type="text" placeholder="add new answer" ng-model="newAnswerText")
+                button(type="submit") Add new Answer
+        script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js")
+        script(src="js/main.js")
 
 
