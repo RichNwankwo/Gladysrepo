@@ -1,6 +1,42 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
-$primaryColor:  red;
+//$primaryColor:  red;
+//
 
-body {
-  color: $primaryColor;
+#mainApp{
+
 }
+
+#factFilter{
+  border-right: 1px solid;
+  height: 80vh;
+}
+
+
+#factScreen{
+  padding-bottom: 40px;
+  height: 80vh;
+}
+
+#factDisplay{
+  margin-top: 50px;
+
+
+}
+
+#factTextArea{
+  margin-top: 40px;
+
+}
+
+.factSubmitButton{
+  padding-top: 15px;
+}
+
+#factScreenText {
+   font-size: 18px;
+   height: 200px;
+   overflow: scroll;
+}
+
+
+

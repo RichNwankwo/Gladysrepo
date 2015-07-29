@@ -1,0 +1,31 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        title Gladys Fact App
+        meta(name="description", content="")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        base(href="/app/fact")
+        link(rel="stylesheet" href='../css/app.css')
+    body()
+        section.container
+            section#headline.page-header
+                h1 Gladys #[small Personal Learning App]
+            section#mainApp.row
+                section#factFilter.col-md-2
+                    p Here I'll put my filter features
+                section#factScreen.col-md-10
+                    section#factDisplay.row
+                        div.col-md-10.col-md-offset-1
+                            div#factScreenText.col-md-8.col-md-offset-2
+                                p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit t occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    section#factTextArea.row
+                        div.row
+                           textarea(rows="9").col-md-8.col-md-offset-2 Enter your new fact here
+                        div.row.factSubmitButton
+                            div.col-lg-2.col-md-offset-5
+                                button(type="button").btn.btn-sm Submit Fact
+
+        script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js")
+

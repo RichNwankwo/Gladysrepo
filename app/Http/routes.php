@@ -33,6 +33,10 @@ Route::get('/', function(){
    return view('app');
 });
 
+Route::get('/app', function(){
+   return view('GladysApp');
+});
+
 Route::get('faqs', function(){
     return \App\Models\QuestionAnswer::all();
 });
