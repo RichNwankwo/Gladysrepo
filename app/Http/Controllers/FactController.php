@@ -84,7 +84,7 @@ class FactController extends ApiController
         else
         {
             return $this->respond([
-                'data' => $this->factTransformer->transform($fact)
+                'data' => [$this->factTransformer->transform($fact)]
             ]);
         }
 

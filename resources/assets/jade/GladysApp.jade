@@ -5,8 +5,10 @@ html(lang="en" ng-app="app")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         title Gladys Fact App
         meta(name="description", content="")
+        script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js")
         meta(name="viewport", content="width=device-width, initial-scale=1")
         base(href="/")
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css")
         link(rel="stylesheet" href='../css/app.css')
     body(ng-app="app")
         section.container
@@ -14,20 +16,24 @@ html(lang="en" ng-app="app")
                 h1 Gladys #[small Personal Learning App]
             section(ng-controller='FactController')#mainApp.row
                 section#factFilter.col-md-2
-                    p {{"Testing Angular"}}
+                    p(ng-repeat="tag in tags") {{tag.tag_name}}
                 section#factScreen.col-md-10
                     section#factDisplay.row
-                        div.col-md-10.col-md-offset-1
-                            div#factScreenText.col-md-8.col-md-offset-2
-                                p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit t occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        div.col-md-9.col-md-offset-2
+                            button(type="button").btn.btn-default.btn-sm.col-md-1.factScreenButton
+                                span(class="glyphicon glyphicon-menu-left")
+                            div#factScreenText.col-md-8
+                                p(ng-repeat="fact in facts") {{fact.fact}}
+                            button(type="button").btn.btn-default.btn-sm.col-md-1.factScreenButton
+                                span(class="glyphicon glyphicon-menu-right")
                     section#factTextArea.row
-                        form(ng-submit="addFact()")
+                        form(name="factForm" required ng-submit="addFact()")
                             div.row
-                               textarea(rows="9" ng-model="newFact").col-md-8.col-md-offset-2 {{ newFact }}
+                               textarea(rows="9" ng-model="newFact" placeholder="Enter a new fact").col-md-10.col-md-offset-1 {{ newFact }}
+                            div.row
                             div.row.factSubmitButton
-                                div.col-lg-2.col-md-offset-5
-                                    button(type="submit").btn.btn-sm Submit Fact
+                                div.col-lg-4.col-md-offset-5
+                                    button(type="submit").btn.btn-md Submit Fact
 
-        script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js")
         script(src="../js/gladys.js")
 

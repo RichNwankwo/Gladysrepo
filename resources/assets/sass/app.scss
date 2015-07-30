@@ -8,7 +8,9 @@
 
 #factFilter{
   border-right: 1px solid;
+  font-size: 75%;
   height: 80vh;
+  overflow: auto;
 }
 
 
@@ -24,7 +26,6 @@
 }
 
 #factTextArea{
-  margin-top: 40px;
 
 }
 
@@ -33,9 +34,20 @@
 }
 
 #factScreenText {
-   font-size: 18px;
-   height: 200px;
+   font-size: 110%;
+   height: 270px;
    overflow: scroll;
+  text-align: center;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  border-top: 1px solid;
+}
+
+.factScreenButton{
+  margin-top: 70px;
+  margin-left: 10px;
+  margin-right: 10px;
+
 }
 
 

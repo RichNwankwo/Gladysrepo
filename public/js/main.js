@@ -1,5 +1,5 @@
-var app = angular.module("myApp", []);
-app.controller("FactController", function($scope, $http){
+var app = angular.module("myApp",[]);
+app.controller('FactController', function($scope, $http){
     //$scope.facts = [
     //    {body: 'Willpower is finite and infinite!', checked: true},
     //    {body: 'Working Memory is very important!', checked: true}
