@@ -87,7 +87,7 @@ class NoController extends ApiController
         else
         {
             return Response()->json([
-                'data' => $this->noTransformer->transform($no)
+                'data' => [$this->noTransformer->transform($no)]
             ], 200);
         }
     }

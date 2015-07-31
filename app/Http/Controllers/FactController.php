@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\GladysApp\Transformers\FactTransformer;
 use App\Models\Fact;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -30,9 +31,13 @@ class FactController extends ApiController
      * @param  FactGetRequest  $request
      * @return Response
      */
-    public function index()
+    public function index($user_id = null)
     {
-        $facts = Fact::all();
+        $facts = $this->getUserFacts($user_id);
+        if(is_null($facts))
+        {
+           return $this->respondNotFound();
+        }
         return $this->respond([
             'data' => $this->factTransformer->transformCollection($facts->toArray())]);
     }
@@ -122,5 +127,23 @@ class FactController extends ApiController
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @param $user_id
+     * @return null
+     */
+    protected function getUserFacts($user_id)
+    {
+        if(! is_null($user_id))
+        {
+            $user = User::find($user_id);
+            $user ? $facts = $user->facts : $facts = null;
+        }
+        else
+        {
+            $facts = Fact::all();
+        }
+        return $facts;
     }
 }

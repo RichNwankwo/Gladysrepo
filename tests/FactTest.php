@@ -25,6 +25,7 @@ class FactTest extends resourceTester {
 
     public function testIf_Tag_Resources_Nested_Properly()
     {
+        $this->authorizeTestUser();
         //arrange
         $url = $this->resource.'/1/tag';
         $tags = [

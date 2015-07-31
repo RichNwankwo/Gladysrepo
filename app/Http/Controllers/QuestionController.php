@@ -81,7 +81,7 @@ class QuestionController extends ApiController
         else
         {
             return $this->respond([
-                'data' => $this->questionTransformer->transform($question)
+                'data' => [$this->questionTransformer->transform($question)]
             ]);
         }
 

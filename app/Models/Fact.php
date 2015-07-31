@@ -19,4 +19,9 @@ class Fact extends Model {
     {
         return $this->hasMany('App\Models\TaggedFact');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 } 

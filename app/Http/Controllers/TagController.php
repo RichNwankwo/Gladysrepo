@@ -94,7 +94,7 @@ class TagController extends ApiController
         else
         {
             return $this->respond([
-                'data' => $this->tagTransformer->transform($tag->toArray())
+                'data' => [$this->tagTransformer->transform($tag->toArray())]
             ]);
         }
     }

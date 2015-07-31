@@ -47,6 +47,7 @@ class resourceTester extends ApiTester{
 
     public function testIf_it_returns_all_resources()
     {
+        $this->authorizeTestUser();
         // arrange
         $this->times(5)->make($this->model);
 
@@ -59,6 +60,7 @@ class resourceTester extends ApiTester{
 
     public function testIf_it_returns_specific_resource()
     {
+        $this->authorizeTestUser();
         $this->make($this->model);
         $this->getJson($this->specificResource);
         $this->assertResponseOk();
@@ -66,6 +68,7 @@ class resourceTester extends ApiTester{
 
     public function testIf_data_is_transformed()
     {
+        $this->authorizeTestUser();
         if( ! is_null($this->format))
         {
             // arrange
@@ -75,7 +78,7 @@ class resourceTester extends ApiTester{
             $resource = $this->getJson($this->specificResource)->data;
 
             // assert
-            $this->assertObjectHasAttributes($resource, $this->format);
+            $this->assertObjectHasAttributes($resource[0], $this->format);
         }
 
     }
@@ -83,6 +86,7 @@ class resourceTester extends ApiTester{
 
     public function testIf_collection_is_transformed()
     {
+        $this->authorizeTestUser();
         if( ! is_null($this->format))
         {
             // arrange
@@ -101,6 +105,7 @@ class resourceTester extends ApiTester{
 
     public function testIf_resource_is_created_successfully()
     {
+        $this->authorizeTestUser();
         //arrange
         $mock_model = $this->getStub();
         $model_class = $this->model;
@@ -123,6 +128,7 @@ class resourceTester extends ApiTester{
 
     public function assertObjectHasAttributes($resource, array $attributes)
     {
+
         foreach($attributes as $attribute)
         {
             $this->assertObjectHasAttribute($attribute, $resource);

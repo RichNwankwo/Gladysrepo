@@ -15,7 +15,7 @@ Route::get('/noButton', function(){
 
 });
 
-Route::group(['prefix' => 'api/v1'], function(){
+Route::group(['prefix' => 'api/v1', 'middleware'=>'auth.basic'], function(){
 
     Route::get('fact/{id}/tag', 'TagController@index');
     Route::resource('no','NoController');
@@ -23,6 +23,9 @@ Route::group(['prefix' => 'api/v1'], function(){
     Route::resource('tag', 'TagController');
     Route::resource('answer', 'QuestionAnswerController');
     Route::resource('question', 'QuestionController');
+
+    Route::get('user/{id}/fact', 'FactController@index');
+    
 });
 
 Route::get('/', function(){

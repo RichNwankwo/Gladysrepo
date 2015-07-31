@@ -38,4 +38,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         // Each user can have many nos
         return $this->hasMany('App\Models\No');
     }
+
+    public function facts()
+    {
+        return $this->hasMany('App\Models\Fact');
+    }
 }
