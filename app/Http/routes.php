@@ -23,24 +23,37 @@ Route::group(['prefix' => 'api/v1', 'middleware'=>'auth.basic'], function(){
     Route::resource('tag', 'TagController');
     Route::resource('answer', 'QuestionAnswerController');
     Route::resource('question', 'QuestionController');
-
     Route::get('user/{id}/fact', 'FactController@index');
+    Route::resource('user', 'UserController');
     
 });
+
+// userController
 
 Route::get('/', function(){
    return view('app');
 });
 
-
-
-Route::get('/app', function(){
-   return view('GladysApp');
+Route::get('login', function(){
+    return view('login');
 });
+
+
+Route::group(['middleware'=>'auth.basic'], function(){
+
+    Route::get('/gladys', function(){
+        return view('gladys');
+    });
+
+
+});
+
+
 
 Route::get('/test', function(){
     return view('test');
 });
+
 
 
 
