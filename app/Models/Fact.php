@@ -15,6 +15,11 @@ class Fact extends Model {
         return $this->belongsToMany('App\Models\Tag', 'facts_tags');
     }
 
+    public function questions()
+    {
+        return $this->hasMany('App\Models\Question');
+    }
+
     public function taggedFact()
     {
         return $this->hasMany('App\Models\TaggedFact');

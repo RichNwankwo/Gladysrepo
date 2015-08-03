@@ -61,14 +61,15 @@ class FactController extends ApiController
     public function store(Request $request)
     {
         //
-        if(! $request->input('fact'))
+        if( ! $request->input('newFact') || ! $request->input('user_id'))
         {
             return $this->respondUnprocessed();
         }
         else
         {
-            Fact::create(['user_id' => $request->input('user_id'), 'fact' => $request->input('fact')]);
-            return $this->respondCreated("Data successfully created");
+            $insert_id = Fact::create(['user_id' => $request->input('user_id'), 'fact' => $request->input('newFact')])->id;
+            $metadata = ['last_inserted_id' => $insert_id];
+            return $this->respondCreated("Data successfully created", $metadata);
         }
     }
 
@@ -115,7 +116,18 @@ class FactController extends ApiController
      */
     public function update(Request $request, $id)
     {
-        //
+        $fact = Fact::find($id);
+
+        if( ! $fact)
+        {
+            return $this->respondNotFound();
+        }
+        else
+        {
+            $fact->fact = $request->input('newFact');
+            $fact->save();
+            return $this->respondCreated();
+        }
     }
 
     /**
@@ -127,6 +139,11 @@ class FactController extends ApiController
     public function destroy($id)
     {
         //
+        $fact = Fact::find($id);
+        $fact->taggedFact()->forceDelete();
+        $fact->questions()->forceDelete();
+        $fact->forceDelete();
+        return $this->respondCreated();
     }
 
     /**

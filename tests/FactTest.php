@@ -66,6 +66,7 @@ class FactTest extends resourceTester {
     public function getStub()
     {
         return [
+            'newFact' => $this->fake->paragraph,
             'user_id' => $this->fake->numberBetween(1,10),
             'fact' => $this->fake->paragraph
         ];

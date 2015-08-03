@@ -101,13 +101,15 @@ class ApiController extends Controller {
     }
 
     /**
-     * @param $message
+     * @param string $message
+     * @param array $metadata
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondCreated($message = "Data Processed Successfully")
+    protected function respondCreated($message = "Data Processed Successfully", $metadata = array())
     {
         return $this->setStatusCode(201)->respond([
-             'message' => $message
+             'message' => $message,
+             'metadata' => $metadata
             ]);
     }
 

@@ -18,6 +18,7 @@ Route::get('/noButton', function(){
 Route::group(['prefix' => 'api/v1', 'middleware'=>'auth.basic'], function(){
 
     Route::get('fact/{id}/tag', 'TagController@index');
+    Route::post('fact/{id}', 'FactController@update');
     Route::resource('no','NoController');
     Route::resource('fact', 'FactController');
     Route::resource('tag', 'TagController');

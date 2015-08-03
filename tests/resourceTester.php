@@ -152,6 +152,7 @@ class resourceTester extends ApiTester{
      */
     protected function authorizeTestUser()
     {
+
         $user = new App\Models\User([
             'name' => 'Test User',
             'email' => 'testing@testing.com',

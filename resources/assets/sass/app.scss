@@ -7,7 +7,7 @@
 }
 
 #sidebar{
-  border-left: 10px solid;
+
   border-right: 5px solid;
   font-size: 75%;
   height: 100vh;
@@ -79,6 +79,41 @@
 #factCardSearch input[type="text"]:focus {
   border: solid 1px #707070;
   box-shadow: 0 0 5px 1px #4CAF50;
+}
+
+#factTextArea{
+
+}
+
+#factTextArea textarea:focus{
+  outline: none !important;
+}
+
+#factTextArea textarea{
+  line-height: 170%;
+  font-size: 125%;
+  overflow: auto;
+  border: solid 10px #EEEEEE;
+  box-shadow: 0 0 5px 1px #4CAF50;
+}
+
+#factOperations i{
+  margin: 15px;
+  color: #FAFAFA;
+  opacity: .7;
+}
+#factOperations i:hover{
+  opacity: 1;
+  cursor: pointer;
+  cursor: hand;
+}
+
+#mainApp{
+  background-color: #388E3C;
+}
+
+.container{
+  background-color: #212121;
 }
 
 

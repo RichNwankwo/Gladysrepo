@@ -12,15 +12,25 @@ html(lang="en" ng-app="gladysApp")
         link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css")
         link(rel="stylesheet" href='../css/app.css')
         script(src="../js/gladys/userInformation.js")
-    body(ng-controller="UserInformation")
+    body(ng-controller="UserInformation").container
         section#header.row
         section#mainApp.row
             section()#sidebar.col-xs-2
                     form()#factCardSearch
                         input(type="text" placeholder="search" ng-model="search").form-control
-                    div(ng-repeat="fact in facts | filter:search").factCards
+                    div(ng-repeat="(key, fact) in facts | filter:search" ng-click="editFact(key)").factCards
                         p #[i(class="fa fa-sticky-note-o")]   {{fact.fact}}
-            section(style="background-color:green")#app.col-xs-10
-                h1 App
+            section()#app.col-xs-10
+                section#factTextArea
+                    form(ng-submit="submit()")
+                        textarea(rows="22" cols="100" name="newFact" ng-model="newFact").col-md-8 {{newFact}}
+                        input(type="hidden" ng-model="currentFactKey" value="{{currentFactKey}}")
+                    section#factPanel.col-md-2
+                        section#factOperations.row
+                            i(class="fa fa-sticky-note-o fa-2x" ng-click="enterNewFact()")  New
+                            i(class="fa fa-floppy-o fa-2x" ng-click="submit()")  Save
+                            i(class="fa fa-trash-o fa-2x" ng-click="deleteFact()")  Delete
+                        section#factTags.row
+
         section#footer.row
 

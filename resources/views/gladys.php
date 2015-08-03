@@ -13,19 +13,28 @@
     <link rel="stylesheet" href="../css/app.css">
     <script src="../js/gladys/userInformation.js"></script>
   </head>
-  <body ng-controller="UserInformation">
+  <body ng-controller="UserInformation" class="container">
     <section id="header" class="row"></section>
     <section id="mainApp" class="row">
       <section id="sidebar" class="col-xs-2">
         <form id="factCardSearch">
           <input type="text" placeholder="search" ng-model="search" class="form-control">
         </form>
-        <div ng-repeat="fact in facts | filter:search" class="factCards">
+        <div ng-repeat="(key, fact) in facts | filter:search" ng-click="editFact(key)" class="factCards">
           <p><i class="fa fa-sticky-note-o"></i>   {{fact.fact}}</p>
         </div>
       </section>
-      <section style="background-color:green" id="app" class="col-xs-10">
-        <h1>App</h1>
+      <section id="app" class="col-xs-10">
+        <section id="factTextArea">
+          <form ng-submit="submit()">
+            <textarea rows="22" cols="100" name="newFact" ng-model="newFact" class="col-md-8">{{newFact}}</textarea>
+            <input type="hidden" ng-model="currentFactKey" value="{{currentFactKey}}">
+          </form>
+          <section id="factPanel" class="col-md-2">
+            <section id="factOperations" class="row"><i ng-click="enterNewFact()" class="fa fa-sticky-note-o fa-2x"> New</i><i ng-click="submit()" class="fa fa-floppy-o fa-2x"> Save</i><i ng-click="deleteFact()" class="fa fa-trash-o fa-2x"> Delete</i></section>
+            <section id="factTags" class="row"></section>
+          </section>
+        </section>
       </section>
     </section>
     <section id="footer" class="row"></section>
