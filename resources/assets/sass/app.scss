@@ -1,6 +1,6 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
-//$primaryColor:  red;
-//
+
+// Move related and duplicated styles into the same class and change in jade
 
 #mainApp{
 
@@ -73,7 +73,7 @@
 }
 
 #factCardSearch{
-  padding-top: 30px;
+
 }
 
 #factCardSearch input[type="text"]:focus {
@@ -114,6 +114,27 @@
 
 .container{
   background-color: #212121;
+}
+
+.factTag{
+  margin: 10px 0px 0px 10px;
+//  margin-left: 10px;
+}
+
+.factTag i {
+  margin-left: 10px;
+  cursor: pointer;
+  cursor: hand;
+}
+
+#addTags{
+  padding: 30px 0px 0px 10px
+}
+
+#addTags input[type="text"]:focus {
+  border: #d3d3d3 solid;
+  //  border: solid 1px #707070;
+//  box-shadow: 0 0 5px 1px #ffffff;
 }
 
 

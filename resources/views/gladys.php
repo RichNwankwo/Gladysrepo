@@ -33,6 +33,14 @@
           <section id="factPanel" class="col-md-2">
             <section id="factOperations" class="row"><i ng-click="enterNewFact()" class="fa fa-sticky-note-o fa-2x"> New</i><i ng-click="submit()" class="fa fa-floppy-o fa-2x"> Save</i><i ng-click="deleteFact()" class="fa fa-trash-o fa-2x"> Delete</i></section>
             <section id="factTags" class="row"></section>
+            <section id="tags" class="row">
+              <div ng-repeat="tag in tags" class="row factTag"><span class="label label-default">{{ tag.tag_name }} <i class="fa fa-trash-o removeTagButton"></i> <i class="fa fa-search learnWithGladys"></i> <i class="fa fa-play findRelatedFact"></i></span></div>
+            </section>
+            <section id="addTags" class="row">
+              <form></form>
+              <input placeholder="Tag fact" type="text" ng-model="newTag" class="form-control form-group-sm">
+              <button ng-click="addTag()" class="button"><i class="fa fa-plus"></i></button>
+            </section>
           </section>
         </section>
       </section>
