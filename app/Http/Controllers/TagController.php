@@ -64,13 +64,9 @@ class TagController extends ApiController
      * @param URI int $fact_id
      * @return Response
      */
-    // TODO NEEDS REFACTORING... maybe put this in another method or even controller (TagFactController?)
-    // TODO What if we don't get a valid fact to create a tag
-    // There has to be a better way to findOrReturnNull with finding by a column
-    // TODO CREATE TESTS
-    public function store(Request $request, $fact_id = null)
+    public function store(Request $request)
     {
-        //
+
         if( ! $request->input('tag_name'))
         {
             return $this->respondUnprocessed();
@@ -78,25 +74,8 @@ class TagController extends ApiController
         else
         {
             $tag_name = $request->input('tag_name');
-            $tag = Tag::where('tag_name', $tag_name)->count();
-            if( ! $tag )
-            {
-                $tag = Tag::create(['tag_name' => $tag_name]);
-
-            }
-            else
-            {
-                $tag = Tag::where('tag_name', $tag_name);
-            }
-            if($fact_id)
-            {
-                TaggedFact::create(['fact_id' => $fact_id, 'tag_id' => $tag->id]);
-                return $this->respondCreated();
-            }
-            else
-            {
-                return $this->respondCreated();
-            }
+             Tag::create(['tag_name' => $tag_name]);
+             return $this->respondCreated();
         }
     }
 

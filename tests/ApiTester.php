@@ -30,5 +30,16 @@ abstract class ApiTester extends TestCase {
         return json_decode($this->call($method, $url, $parameters)->getContent());
     }
 
+    protected function authorizeTestUser()
+    {
+
+        $user = new App\Models\User([
+            'name' => 'Test User',
+            'email' => 'testing@testing.com',
+            'password' => Hash::make('testing')
+        ]);
+        $this->be($user);
+    }
+
 
 } 

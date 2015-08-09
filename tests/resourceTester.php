@@ -5,7 +5,8 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 
-include_once('tests/ApiTester.php');
+
+
 class resourceTester extends ApiTester{
 
     use Factory;
@@ -150,16 +151,7 @@ class resourceTester extends ApiTester{
     /**
      * @return array
      */
-    protected function authorizeTestUser()
-    {
 
-        $user = new App\Models\User([
-            'name' => 'Test User',
-            'email' => 'testing@testing.com',
-            'password' => Hash::make('testing')
-        ]);
-        $this->be($user);
-    }
 
 
 }

@@ -26,7 +26,8 @@ Route::group(['prefix' => 'api/v1', 'middleware'=>'auth.basic'], function(){
     Route::resource('question', 'QuestionController');
     Route::get('user/{id}/fact', 'FactController@index');
     Route::resource('user', 'UserController');
-    Route::post('fact/{fact_id}/tag', 'TagController@store');
+    Route::post('fact/{fact_id}/tag', 'TagFactController@store');
+
     
 });
 
