@@ -18,7 +18,7 @@ html(lang="en" ng-app="gladysApp")
             section()#sidebar.col-xs-2
                     form()#factCardSearch
                         input(type="text" placeholder="search" ng-model="search").form-control
-                    div(ng-repeat="(key, fact) in facts | filter:search" ng-click="editFact(key)").factCards
+                    div(ng-repeat="(key, fact) in facts | filter:search" ng-click="editFact(fact)").factCards
                         p #[i(class="fa fa-sticky-note-o")]   {{fact.fact}}
             section()#app.col-xs-10
                 section#factTextArea
@@ -33,7 +33,7 @@ html(lang="en" ng-app="gladysApp")
                         section#factTags.row
                         section#tags.row
                             div.row.factTag(ng-repeat="tag in tags")
-                                span.label.label-default {{ tag.tag_name }} #[i.fa.fa-trash-o.removeTagButton] #[i.fa.fa-search.learnWithGladys] #[i.fa.fa-play.findRelatedFact]
+                                span.label.label-default {{ tag.tag_name }} #[i.fa.fa-trash-o.removeTagButton(ng-click="deleteTag(tag)")] #[i.fa.fa-search.learnWithGladys] #[i.fa.fa-play.findRelatedFact]
                         section#addTags.row
                             form()
                             input.form-control.form-group-sm(placeholder="Tag fact" type="text" ng-model="newTag")

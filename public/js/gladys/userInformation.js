@@ -26,48 +26,74 @@ app.controller('UserInformation', function($scope, $http){
         .then(returnUserInfo)
         .then(returnFactInfo)
 
+    // TODO rn refactor
     $scope.submit = function(){
         if($scope.newFact){
            var newFact = {
                 'newFact': $scope.newFact,
                 'user_id': $scope.user.user_id
             }
-            var currentKey = $scope.currentFactKey
-            console.log(currentKey);
-
-            if( currentKey  == undefined ) {
+            var currentFact = $scope.currentFact
+            if( currentFact  == undefined ) {
                 $http.post('api/v1/fact/', newFact).success(function (response) {
                     var insertedFact = {
                         id: null,
                         fact: newFact.newFact
                     }
                     insertedFact.id = response.metadata.last_inserted_id;
+                    if($scope.tags)
+                    {
+                        $scope.tags.forEach(function(newTag){
+                            $http.post('api/v1/fact/' + insertedFact.id  + '/tag', newTag).then(function (response)
+                            {
+                                $scope.tags = [];
+                            });
+                        });
+                    }
                     $scope.facts.push(insertedFact);
                 });
             }
-            else {
-                var factID = $scope.facts[currentKey].id;
+            else
+            {
+                var factID = currentFact.id;
                 $http.post('api/v1/fact/' + factID, newFact).success(function () {
-                    $scope.facts[currentKey].fact = newFact.newFact;
+                    var currentKey = "";
+                    $scope.facts.forEach(function(fact, key){
+                        if(fact.id == currentFact.id){
+                            fact.fact = newFact.newFact;
+                        }
+
+                    });
+                    $scope.tags = [];
                 });
             }
             $scope.newFact = '';
-            $scope.currentFactKey = undefined;
+            $scope.currentFact = undefined;
         }
     }
 
    $scope.addTag = function()
     {
         var newTag ={
+            id: null,
             tag_name:  $scope.newTag
         }
 
-        var fact =  $scope.facts[$scope.currentFactKey];
-        $http.post('api/v1/fact/'+fact.id+'/tag', newTag).then(function(response){
-            $scope.tags.push(newTag);
+        var fact =  $scope.currentFact;
+        if(fact)
+        {
+            $http.post('api/v1/fact/' + fact.id + '/tag', newTag).then(function (response) {
+                newTag.id = response.data.metadata.tag_id
+                $scope.tags.push(newTag);
+                $scope.newTag = "";
+            });
+        }
+        else
+        {
             $scope.newTag = "";
-        });
-
+            $scope.tags == undefined ? $scope.tags = [] : "";
+            $scope.tags.push(newTag);
+        }
     }
 
     // TODO Finish creating this function
@@ -77,7 +103,6 @@ app.controller('UserInformation', function($scope, $http){
     }
 
     var throwJsonError = function(response){
-        console.log(response)
         $scope.error = response.data.error.message;
     }
 
@@ -89,32 +114,54 @@ app.controller('UserInformation', function($scope, $http){
         $scope.tags = response.data.data;
     }
 
-    $scope.editFact = function(key){
-        var fact = $scope.facts[key];
+    $scope.editFact = function(fact){
+        $scope.currentFact = fact;
+        var fact = fact;
         $scope.newFact = fact.fact;
-        $scope.currentFactKey = key;
         $scope.tags = getUserTags(fact.id);
+
     }
 
     $scope.enterNewFact = function(){
         $scope.newFact = '';
+        $scope.tags = [];
         $scope.currentFactKey =  undefined;
     }
 
+    $scope.deleteTag = function(selectedTag)
+    {
+
+        var currentFact  = $scope.currentFact
+        $http.delete('api/v1/fact/' + currentFact.id+ '/tag/'+ selectedTag.id)
+        var currentTagId = "";
+        $scope.tags.forEach(function(tag, index){
+            if(tag.id == selectedTag.id){
+              $scope.tags.splice(index, 1);
+            }
+        });
+
+
+    }
     $scope.deleteFact = function()
     {
-        var currentKey  = $scope.currentFactKey
-        if(currentKey  != undefined)
+        var currentFact  = $scope.currentFact
+        if(currentFact != undefined)
         {
-            var factID = $scope.facts[currentKey].id;
-            $http.delete('api/v1/fact/' + factID).success(function(){
+
+            $http.delete('api/v1/fact/' + currentFact.id).success(function(){
                 $scope.newFact = '';
+                $scope.tags = [];
+                var currentKey = "";
+                $scope.facts.forEach(function(fact, key){
+                    if(fact.id == currentFact.id){
+                        currentKey = key;
+                    }
+                });
                 $scope.facts.splice($scope.facts.indexOf($scope.facts[currentKey]), 1);
+                $scope.currentFact = undefined;
             });
 
-
         }
-
     }
 
 

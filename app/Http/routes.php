@@ -27,6 +27,7 @@ Route::group(['prefix' => 'api/v1', 'middleware'=>'auth.basic'], function(){
     Route::get('user/{id}/fact', 'FactController@index');
     Route::resource('user', 'UserController');
     Route::post('fact/{fact_id}/tag', 'TagFactController@store');
+    Route::delete('fact/{fact_id}/tag/{tag_id}', 'TagFactController@destroy');
 
     
 });

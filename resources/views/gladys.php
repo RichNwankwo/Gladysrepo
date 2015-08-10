@@ -20,7 +20,7 @@
         <form id="factCardSearch">
           <input type="text" placeholder="search" ng-model="search" class="form-control">
         </form>
-        <div ng-repeat="(key, fact) in facts | filter:search" ng-click="editFact(key)" class="factCards">
+        <div ng-repeat="(key, fact) in facts | filter:search" ng-click="editFact(fact)" class="factCards">
           <p><i class="fa fa-sticky-note-o"></i>   {{fact.fact}}</p>
         </div>
       </section>
@@ -34,7 +34,7 @@
             <section id="factOperations" class="row"><i ng-click="enterNewFact()" class="fa fa-sticky-note-o fa-2x"> New</i><i ng-click="submit()" class="fa fa-floppy-o fa-2x"> Save</i><i ng-click="deleteFact()" class="fa fa-trash-o fa-2x"> Delete</i></section>
             <section id="factTags" class="row"></section>
             <section id="tags" class="row">
-              <div ng-repeat="tag in tags" class="row factTag"><span class="label label-default">{{ tag.tag_name }} <i class="fa fa-trash-o removeTagButton"></i> <i class="fa fa-search learnWithGladys"></i> <i class="fa fa-play findRelatedFact"></i></span></div>
+              <div ng-repeat="tag in tags" class="row factTag"><span class="label label-default">{{ tag.tag_name }} <i ng-click="deleteTag(tag)" class="fa fa-trash-o removeTagButton"></i> <i class="fa fa-search learnWithGladys"></i> <i class="fa fa-play findRelatedFact"></i></span></div>
             </section>
             <section id="addTags" class="row">
               <form></form>

@@ -1,7 +1,5 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 
-// Move related and duplicated styles into the same class and change in jade
-
 #mainApp{
 
 }
@@ -24,12 +22,6 @@
 
 #factDisplay{
   margin-top: 50px;
-
-
-}
-
-#factTextArea{
-
 }
 
 .factSubmitButton{
@@ -133,8 +125,6 @@
 
 #addTags input[type="text"]:focus {
   border: #d3d3d3 solid;
-  //  border: solid 1px #707070;
-//  box-shadow: 0 0 5px 1px #ffffff;
 }
 
 

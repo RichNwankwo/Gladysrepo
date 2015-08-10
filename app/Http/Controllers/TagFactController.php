@@ -60,8 +60,10 @@ class TagFactController extends ApiController
             $tag = Tag::firstOrCreate(['tag_name'=>$tag_name]);
             if($tag)
             {
+
                 TaggedFact::create(['fact_id' => $fact_id, 'tag_id' => $tag->id]);
-                return $this->respondCreated();
+                $metadata = ['tag_id' => $tag->id];
+                return $this->respondCreated("Request Successful", $metadata);
             }
             else
             {
@@ -110,8 +112,9 @@ class TagFactController extends ApiController
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($fact_id, $tag_id)
     {
-        //
+        $tagFactRow = TaggedFact::whereRaw("tag_id = '$tag_id' and fact_id = '$fact_id'")->first();
+        $tagFactRow->forceDelete();
     }
 }
