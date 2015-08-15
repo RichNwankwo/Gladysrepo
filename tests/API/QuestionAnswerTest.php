@@ -5,7 +5,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-include_once('tests/resourceTester.php');
+include_once('tests/API/resourceTester.php');
 class QuestionAnswerTest extends resourceTester {
 
     protected $model = 'App\Models\QuestionAnswer';

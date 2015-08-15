@@ -1,6 +1,6 @@
 <?php
 
-include_once('tests/ApiTester.php');
+include_once('tests/API/ApiTester.php');
 use App\Models\Fact;
 class FactTagTest extends ApiTester{
 
