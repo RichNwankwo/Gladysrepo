@@ -1,10 +1,10 @@
 <?php
 
-use App\GladysApp\Domain\QuestionRandomizer;
+use App\GladysApp\Domain\QuestionSelector;
 use App\Models\Fact;
 use App\Models\Question;
 
-class QuestionRandomizerTest extends TestCase {
+class QuestionSelectorTest extends TestCase {
 
 
     public function setUp()
@@ -32,7 +32,7 @@ class QuestionRandomizerTest extends TestCase {
         Question::insert($questions);
 
         //act
-        $questionRandomizer = new QuestionRandomizer(new \App\GladysApp\Transformers\FactTransformer, new \App\GladysApp\Transformers\QuestionTransformer);
+        $questionRandomizer = new QuestionSelector(new \App\GladysApp\Transformers\FactTransformer, new \App\GladysApp\Transformers\QuestionTransformer);
         $fact_with_question =  $questionRandomizer->getRandomQuestion($fact_id);
 
         //assert
@@ -55,7 +55,7 @@ class QuestionRandomizerTest extends TestCase {
         Question::insert($questions);
 
         //act
-        $questionRandomizer = new QuestionRandomizer(new \App\GladysApp\Transformers\FactTransformer, new \App\GladysApp\Transformers\QuestionTransformer);
+        $questionRandomizer = new QuestionSelector(new \App\GladysApp\Transformers\FactTransformer, new \App\GladysApp\Transformers\QuestionTransformer);
         $fact_with_question =  $questionRandomizer->getRandomQuestion($fact_id);
 
         //assert

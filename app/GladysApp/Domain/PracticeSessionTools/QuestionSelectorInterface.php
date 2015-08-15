@@ -1,7 +1,7 @@
 <?php
 
 namespace App\GladysApp\Domain;
-interface QuestionRandomizerInterface {
+interface QuestionSelectorInterface {
 
     /**
      * @param $fact Fact that we need a random question for

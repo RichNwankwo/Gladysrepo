@@ -9,10 +9,10 @@ use App\GladysApp\Transformers\QuestionTransformer;
 
 
 /**
- * Class QuestionRandomizer
+ * Class QuestionSelector
  * Gets Questions for session
  */
-class QuestionRandomizer implements QuestionRandomizerInterface {
+class QuestionSelector implements QuestionSelectorInterface {
 
     protected $sessionQuestionTransformer;
     protected $questionTransformer;
