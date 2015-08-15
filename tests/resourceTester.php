@@ -35,16 +35,7 @@ class resourceTester extends ApiTester{
     /**
      * @var bool Is auth needed to access data
      */
-    protected $authorization_needed = FALSE;
-
-//    public function setUp()
-//    {
-//        parent::setUp();
-//        if($this->authorization_needed === TRUE)
-//        {
-//            $this->authorizeTestUser();
-//        }
-//    }
+    protected $authorization_needed = TRUE;
 
     public function testIf_it_returns_all_resources()
     {
@@ -106,15 +97,10 @@ class resourceTester extends ApiTester{
 
     public function testIf_resource_is_created_successfully()
     {
-        $this->authorizeTestUser();
         //arrange
         $mock_model = $this->getStub();
         $model_class = $this->model;
-        if($this->authorization_needed === TRUE)
-        {
-            $this->authorizeTestUser();
-        }
-
+        $this->authorizeTestUser();
 
         //act
         $this->getJson($this->resource,"POST", $mock_model);

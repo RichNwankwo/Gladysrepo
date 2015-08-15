@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Faker\Factory as Faker;
 
@@ -33,12 +34,21 @@ abstract class ApiTester extends TestCase {
     protected function authorizeTestUser()
     {
 
-        $user = new App\Models\User([
+
+//        $user = new App\Models\User([
+//            'name' => 'Test User',
+//            'email' => 'testing@testing.com',
+//            'password' => Hash::make('testing')
+//        ]);
+        $user = \App\Models\User::create([
             'name' => 'Test User',
             'email' => 'testing@testing.com',
             'password' => Hash::make('testing')
         ]);
-        $this->be($user);
+//        $this->be($user);
+        Session::start();
+        $user = User::find(1);
+        Auth::login($user);
     }
 
 

@@ -62,12 +62,41 @@ class FactTest extends resourceTester {
         $this->assertResponseStatus(422);
     }
 
+    public function testIf_error_is_thrown_if_user_not_authorized()
+    {
+        $fact = ['fact'=>'That maui wowie'];
+
+        if($this->authorization_needed === TRUE)
+        {
+            $this->authorizeTestUser();
+        }
+
+        $resource = 'http://gladys.app/api/v1/user/26/fact/';
+        $this->getJson($resource, "POST", $fact);
+
+        $this->assertResponseStatus(403);
+    }
+
+    public function testIf_resource_is_created_successfully()
+    {
+        $fact = ['newFact'=>'That maui wowie'];
+        if($this->authorization_needed === TRUE)
+        {
+            $this->authorizeTestUser();
+        }
+        $resource = 'http://gladys.app/api/v1/user/1/fact/';
+        $this->getJson($resource, "POST", $fact);
+
+        // assert
+        $this->assertResponseStatus(201);
+    }
+
 
     public function getStub()
     {
         return [
             'newFact' => $this->fake->paragraph,
-            'user_id' => $this->fake->numberBetween(1,10),
+            'user_id' => '1',
             'fact' => $this->fake->paragraph
         ];
     }

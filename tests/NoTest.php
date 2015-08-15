@@ -25,7 +25,7 @@ class NoTest extends resourceTester{
     public function getStub()
     {
         return [
-            'user_id' => $this->fake->numberBetween(1,10),
+            'user_id' => 1,
             'description' => $this->fake->sentence
         ];
     }

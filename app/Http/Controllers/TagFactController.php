@@ -10,6 +10,9 @@ use App\Models\TaggedFact;
 use App\Models\Fact;
 use App\Models\Tag;
 
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Auth;
+
 class TagFactController extends ApiController
 {
     /**
@@ -40,8 +43,9 @@ class TagFactController extends ApiController
      * @param URI int $fact_id
      * @return Response
      */
-    public function store(Request $request, $fact_id = null)
+    public function store(Request $request, $user_id = null, $fact_id = null)
     {
+
 
         if( ! $request->input('tag_name'))
         {
@@ -49,11 +53,23 @@ class TagFactController extends ApiController
         }
 
         $fact = Fact::find($fact_id);
+        if($user_id)
+        {
+            $authUser = Auth::ID();
+            if($authUser !=  $user_id)
+            {
+                return $this->respondForbidden("Unauthorized: Must be logged to access endpoint");
+            }
+            if($fact->user_id != $user_id)
+            {
+                return $this->respondForbidden("Unauthorized: Verify you still have access to resource");
+            }
+        }
+
         if( ! $fact)
         {
             return $this->respondNotFound("Fact Not found");
         }
-
         else
         {
             $tag_name = $request->input('tag_name');

@@ -24,10 +24,14 @@ Route::group(['prefix' => 'api/v1', 'middleware'=>'auth.basic'], function(){
     Route::resource('tag', 'TagController');
     Route::resource('answer', 'QuestionAnswerController');
     Route::resource('question', 'QuestionController');
-    Route::get('user/{id}/fact', 'FactController@index');
+    Route::get('user/{user_id}/fact', 'FactController@index');
+    Route::post('user/{user_id}/fact', 'FactController@store');
     Route::resource('user', 'UserController');
-    Route::post('fact/{fact_id}/tag', 'TagFactController@store');
+    Route::post('user/{id}/fact/{fact_id}/tag', 'TagFactController@store');
     Route::delete('fact/{fact_id}/tag/{tag_id}', 'TagFactController@destroy');
+    route::post('practice_session', 'PracticeSessionController@store');
+    route::post('practice_material', 'PracticeMaterialController@store');
+
 
     
 });

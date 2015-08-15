@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Commands\FactInserted;
 use App\GladysApp\Transformers\FactTransformer;
 use App\Models\Fact;
 
@@ -55,19 +56,34 @@ class FactController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  FactPostRequest  $request
+     * @param  Request  $request
+     * @param  $user_id user URI segment
      * @return Response
      */
-    public function store(Request $request)
+    // TODO ADD TEST FOR NEW USER RESOURCE
+    public function store(Request $request, $user_id = null)
     {
-        //
-        if( ! $request->input('newFact') || ! $request->input('user_id'))
+
+        if($user_id)
         {
-            return $this->respondUnprocessed();
+            $authUser = Auth::ID();
+            if($authUser !=  $user_id)
+            {
+                return $this->respondForbidden("Unauthorized: Must be logged to access endpoint");
+            }
+        }
+
+
+        if( ! $request->input('newFact'))
+        {
+            return $this->respondUnprocessed("Unprocessed: Please check data sent and try again");
         }
         else
         {
-            $insert_id = Fact::create(['user_id' => $request->input('user_id'), 'fact' => $request->input('newFact')])->id;
+            $createdFact = Fact::create(['user_id' => $user_id, 'fact' => $request->input('newFact')]);
+            $insert_id = $createdFact->id;
+            // We need to do some other tasks like get questions for new fact
+            $this->dispatch(new FactInserted(Auth::user(), $createdFact));
             $metadata = ['last_inserted_id' => $insert_id];
             return $this->respondCreated("Data successfully created", $metadata);
         }
