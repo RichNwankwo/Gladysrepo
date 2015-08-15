@@ -1,32 +1,27 @@
 var app = angular.module('gladysApp', []);
 
 // TODO move view related code to seperate file
-// TODO move user data into it's own service
 // TODO CLEAN UP!!!!
 // TODO I'm thinking facts controller, tags controller or something like that
 // TODO Create TESTS
-app.controller('UserInformation', function($scope, $http){
+app.controller('UserInformation', function($scope, $http, UserApiService){
 
-    var returnUserInfo = function(response){
-        var user = response.data.data[0];
-        $scope.user = user;
-        return $http.get('api/v1/user/'+ user.user_id + '/fact');
-    };
+    // Get the needed data for this controller
 
-    var returnFactInfo = function(response){
-        $scope.facts = response.data.data;
-    }
+    var LoggedInUserID;
+    UserApiService.UserData().then(function(response) {
+        console.log(response);
+        $scope.user = response;
+        LoggedInUserID = $scope.user.user_id;
 
-    var returnTagInfo = function(response){
 
-    }
+            UserApiService.FactData($scope.user.user_id).then(function(response){
+            console.log(response);
+            $scope.facts = response;
+        });
+    });
 
-    // Check if our user is logged in
-    $http.get('api/v1/user')
-        .then(returnUserInfo)
-        .then(returnFactInfo)
 
-    // TODO rn refactor
     $scope.submit = function(){
         if($scope.newFact){
            var newFact = {
@@ -35,7 +30,7 @@ app.controller('UserInformation', function($scope, $http){
             }
             var currentFact = $scope.currentFact
             if( currentFact  == undefined ) {
-                $http.post('api/v1/fact/', newFact).success(function (response) {
+                $http.post('api/v1/user/'+ $scope.user.user_id + '/fact/', newFact).success(function (response) {
                     var insertedFact = {
                         id: null,
                         fact: newFact.newFact
@@ -44,9 +39,19 @@ app.controller('UserInformation', function($scope, $http){
                     if($scope.tags)
                     {
                         $scope.tags.forEach(function(newTag){
-                            $http.post('api/v1/fact/' + insertedFact.id  + '/tag', newTag).then(function (response)
+                            $http.post('api/v1/user/'+ $scope.user.user_id + '/fact/' + insertedFact.id  + '/tag', newTag).then(function (response)
                             {
-                                $scope.tags = [];
+                                if($scope.pinnedTags){
+                                    $scope.tags = $scope.pinnedTags;
+                                }
+                                else{
+                                    if($scope.pinnedTags){
+                                        $scope.tags = $scope.pinnedTags;
+                                    }
+                                    else{
+                                        $scope.tags = [];
+                                    }
+                                }
                             });
                         });
                     }
@@ -64,7 +69,12 @@ app.controller('UserInformation', function($scope, $http){
                         }
 
                     });
-                    $scope.tags = [];
+                    if($scope.pinnedTags){
+                        $scope.tags = $scope.pinnedTags;
+                    }
+                    else{
+                        $scope.tags = [];
+                    }
                 });
             }
             $scope.newFact = '';
@@ -79,10 +89,11 @@ app.controller('UserInformation', function($scope, $http){
             tag_name:  $scope.newTag
         }
 
+
         var fact =  $scope.currentFact;
         if(fact)
         {
-            $http.post('api/v1/fact/' + fact.id + '/tag', newTag).then(function (response) {
+            $http.post('api/v1/user/'+LoggedInUserID+'/fact/' + fact.id + '/tag', newTag).then(function (response) {
                 newTag.id = response.data.metadata.tag_id
                 $scope.tags.push(newTag);
                 $scope.newTag = "";
@@ -119,29 +130,52 @@ app.controller('UserInformation', function($scope, $http){
         var fact = fact;
         $scope.newFact = fact.fact;
         $scope.tags = getUserTags(fact.id);
-
     }
 
     $scope.enterNewFact = function(){
         $scope.newFact = '';
-        $scope.tags = [];
-        $scope.currentFactKey =  undefined;
+        if($scope.pinnedTags){
+            $scope.tags = $scope.pinnedTags;
+        }
+        else{
+            $scope.tags = [];
+        }
+        $scope.currentFact = undefined;
     }
 
     $scope.deleteTag = function(selectedTag)
     {
-
-        var currentFact  = $scope.currentFact
-        $http.delete('api/v1/fact/' + currentFact.id+ '/tag/'+ selectedTag.id)
-        var currentTagId = "";
         $scope.tags.forEach(function(tag, index){
             if(tag.id == selectedTag.id){
               $scope.tags.splice(index, 1);
             }
         });
-
+        var currentFact  = $scope.currentFact
+        if(currentFact){
+            $http.delete('api/v1/fact/' + currentFact.id+ '/tag/'+ selectedTag.id);
+        }
 
     }
+
+    $scope.PinTag = function(selectedTag)
+    {
+        if($scope.pinnedTags){
+            $scope.pinnedTags.forEach(function(pinTag, index){
+                if(selectedTag.tag_name == pinTag.tag_name){
+                    $scope.pinnedTags.splice(index,1);
+                }
+                else{
+                    $scope.pinnedTags.push(selectedTag)
+                }
+            });
+        }
+        else {
+            $scope.pinnedTags = [];
+            $scope.pinnedTags.push(selectedTag);
+        }
+    }
+
+
     $scope.deleteFact = function()
     {
         var currentFact  = $scope.currentFact
@@ -150,7 +184,12 @@ app.controller('UserInformation', function($scope, $http){
 
             $http.delete('api/v1/fact/' + currentFact.id).success(function(){
                 $scope.newFact = '';
-                $scope.tags = [];
+                if($scope.pinnedTags){
+                    $scope.tags = $scope.pinnedTags;
+                }
+                else{
+                    $scope.tags = [];
+                }
                 var currentKey = "";
                 $scope.facts.forEach(function(fact, key){
                     if(fact.id == currentFact.id){
@@ -165,6 +204,43 @@ app.controller('UserInformation', function($scope, $http){
     }
 
 
+});
+
+app.factory('UserApiService', function($http){
+
+    var userPromise;
+    var UserApiService = {
+        UserData: function(){
+            if(!userPromise)
+                var userPromise = $http.get('api/v1/user').then(function(response){
+                return response.data.data[0];
+        });
+            return userPromise;
+        },
+
+        FactData: function(user_id){
+            var promise = $http.get('api/v1/user/'+user_id+'/fact').then(function(response){
+                return response.data.data;
+            });
+            return promise
+        }
+    };
+
+    return UserApiService;
 
 
 });
+
+//app.directive('FactInsertConsole', function(){
+//    return {
+//        restrict: 'EA',
+//        scope:{
+//            fact:'@'
+//        },
+//        template: '<textarea rows="22" cols="100" name="newFact" class="col-md-8">{{newFact}}</textarea>',
+//        templateURL: factInserConsole.html,
+//        controller: FactController,
+//        link: function($scope, element, attrs){
+//        }
+//    }
+//});
