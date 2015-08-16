@@ -33,13 +33,14 @@ class QuestionSelector implements QuestionSelectorInterface {
      * @param $fact_id  Fact that we need a random question for
      * @return mixed
      */
+    // TODO crn Put in find or fails incase we get a fact that has no questions
     public function getRandomQuestion($fact_id)
     {
 
         $fact = Fact::find($fact_id);
         $questions = $fact->questions;
         // Gets a random question from 0 to max number of questions available
-        $random_question = $questions[rand(0,count($questions)-1)];
+        $random_question = $questions[mt_rand(0,count($questions)-1)];
         $fact_with_question = $this->returnFactWithQuestion($fact, $random_question);
         return $fact_with_question;
     }
