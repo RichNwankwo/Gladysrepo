@@ -29,7 +29,7 @@ Route::group(['prefix' => 'api/v1', 'middleware'=>'auth.basic'], function(){
     Route::resource('user', 'UserController');
     Route::post('user/{id}/fact/{fact_id}/tag', 'TagFactController@store');
     Route::delete('fact/{fact_id}/tag/{tag_id}', 'TagFactController@destroy');
-    route::post('practice_session', 'PracticeSessionController@store');
+    route::post('user/{user_id}/practice_session', 'PracticeSessionController@store');
     route::post('practice_material', 'PracticeMaterialController@store');
 
 

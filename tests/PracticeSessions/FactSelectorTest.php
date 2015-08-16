@@ -29,7 +29,7 @@ class FactSelectorTest extends TestCase{
             ['user_id'=> $user->id, 'fact'=> 'I provide that new new']
         ]);
 
-        $this->factSelector = new \App\GladysApp\Domain\FactSelector(new \App\GladysApp\Transformers\FactTransformer);
+        $this->factSelector = new \App\GladysApp\Domain\FactSelector();
         $fact = $this->factSelector->selectRandomFact($user->id);
 
         $this->assertArrayHasKey('user_id', $fact);

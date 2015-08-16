@@ -90,7 +90,7 @@ class QuestionSelectorTest extends TestCase {
         Question::insert($questions);
 
         //act
-        $questionRandomizer = new QuestionSelector(new \App\GladysApp\Transformers\FactTransformer, new \App\GladysApp\Transformers\QuestionTransformer);
+        $questionRandomizer = new QuestionSelector();
         $fact_with_question =  $questionRandomizer->getRandomQuestion($fact_id);
 
         //assert

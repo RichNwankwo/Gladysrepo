@@ -9,9 +9,9 @@ class FactSelector implements FactSelectorInterface{
 
     protected $factTransformer;
 
-    function __construct( FactTransformer $factTransformer)
+    function __construct()
     {
-        $this->factTransformer = $factTransformer;
+        $this->factTransformer = new FactTransformer();
     }
 
     // TODO crn Put in find or fails incase we get a fact that has no questions

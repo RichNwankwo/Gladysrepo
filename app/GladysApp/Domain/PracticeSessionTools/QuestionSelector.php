@@ -22,15 +22,15 @@ class QuestionSelector implements QuestionSelectorInterface {
      * @param FactTransformer $factTransformer
      * @param QuestionTransformer $questionTransformer
      */
-    function __construct(FactTransformer $factTransformer, QuestionTransformer $questionTransformer)
+    function __construct()
     {
-        $this->factTransformer = $factTransformer;
-        $this->questionTransformer = $questionTransformer;
+        $this->factTransformer = new FactTransformer();
+        $this->questionTransformer = new QuestionTransformer();
     }
 
 
     /**
-     * @param $fact_id  Fact that we need a random question for
+     * @param $fact_id int that we need a random question for
      * @return mixed
      */
     // TODO crn Put in find or fails incase we get a fact that has no questions
