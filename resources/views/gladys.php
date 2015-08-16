@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/app.css">
     <script src="../js/gladys/userInformation.js"></script>
+    <script src="../js/gladys/angular-route.js"></script>
   </head>
   <body ng-controller="UserInformation" class="container">
     <section id="header" class="row"></section>
@@ -41,6 +42,7 @@
               <input placeholder="Tag fact" type="text" ng-model="newTag" class="form-control form-group-sm">
               <button ng-click="addTag()" class="button"><i class="fa fa-plus"></i></button>
             </section>
+            <section id="practice" class="row"><i class="fa fa-play-circle-o fa-4x"><a href="/gladys_learning"></a></i></section>
           </section>
         </section>
       </section>

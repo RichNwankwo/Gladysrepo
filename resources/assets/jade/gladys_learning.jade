@@ -1,0 +1,32 @@
+doctype html
+html(lang="en" ng-app="gladysApp")
+    head
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        title Gladys Fact App
+        meta(name="description", content="")
+        script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        base(href="/")
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css")
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css")
+        link(rel="stylesheet" href='../css/app.css')
+        script(src="../js/gladys/userInformation.js")
+        script(src="../js/gladys/angular-route.js")
+
+        body(ng-controller="QuestionController")#mainApp.container
+            section.col-md-12
+                section#fact.row
+                    section.col-md-8
+                        textarea(rows="1" cols="100") {{currentMaterial.question_title}}
+                    section.col-md-2
+                section#factReveal.row
+                    i(ng-click="check=true").fa.fa-check-square-o.fa-2x Show Fact
+                    div(ng-show="check" class="ng-hide")
+                        textarea(rows="5" cols="100" ng-model="currentMaterial.fact") {{currentMaterial.fact}}
+                section()#question.row
+                    section.col-md-8
+                        textarea(rows="5" cols="100" ng-model="questionAnswer")
+                    section.col-md-3
+                        i.fa.fa-gg.fa-2x  Submit Answer
+                        i.fa.fa-forward.fa-2x  Next Question

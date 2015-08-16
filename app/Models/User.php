@@ -43,4 +43,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $this->hasMany('App\Models\Fact');
     }
+
+    public function practice_sessions()
+    {
+        return $this->hasMany('App\Models\PracticeSession');
+    }
 }

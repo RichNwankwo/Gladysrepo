@@ -53,6 +53,10 @@ Route::group(['middleware'=>'auth.basic'], function(){
         return view('gladys');
     });
 
+    Route::get('gladys_learning', function(){
+        return view('gladys_learning');
+    });
+
 
 });
 

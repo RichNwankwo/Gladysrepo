@@ -127,6 +127,40 @@
   border: #d3d3d3 solid;
 }
 
+#practice i{
+  opacity: .7;
+  margin: 25px 0 0 30px;
+}
+
+#practice i:hover{
+  opacity: 1;
+  cursor: pointer;
+  cursor: hand;
+}
+
+#question{
+  margin-top: 60px;
+}
+
+i{
+  opacity: .7;
+  margin-top: 5px
+}
+
+i:hover{
+  opacity: 1;
+  cursor: pointer;
+  cursor: hand;
+  ;
+}
+
+#factReveal {
+  margin-top: 30px;
+  margin-left: 1px;
+}
+
+
+
 
 
 

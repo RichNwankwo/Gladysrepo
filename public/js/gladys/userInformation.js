@@ -1,9 +1,20 @@
-var app = angular.module('gladysApp', []);
+var app = angular.module('gladysApp', ['ngRoute']);
 
 // TODO move view related code to seperate file
 // TODO CLEAN UP!!!!
 // TODO I'm thinking facts controller, tags controller or something like that
 // TODO Create TESTS
+
+app.config(['$routeProvider',
+    function($routeProvider) {
+        $routeProvider.when(
+            '/gladys_learning', {
+                templateUrl: 'resources/views/ang.html'
+            }).
+            otherwise({
+                redirectTo: '/gladys'
+            });
+    }]);
 app.controller('UserInformation', function($scope, $http, UserApiService){
 
     // Get the needed data for this controller
@@ -229,6 +240,34 @@ app.factory('UserApiService', function($http){
     return UserApiService;
 
 
+});
+
+app.controller('QuestionController', function($scope, UserApiService, PracticeSessionService){
+    var LoggedInUserID;
+    UserApiService.UserData().then(function(response) {
+        console.log(response);
+        $scope.user = response;
+        LoggedInUserID = $scope.user.user_id;
+
+        PracticeSessionService.PracticeSessionMaterial(LoggedInUserID).then(function(response){
+            console.log(response);
+            $scope.currentMaterial = response;
+        });
+    });
+
+
+});
+
+app.factory('PracticeSessionService', function($http){
+    var PracticeSessionService = {
+        PracticeSessionMaterial: function (user_id) {
+            var promise = $http.post('api/v1/user/' + user_id + '/practice_session',null).then(function (response) {
+                return response.data.data[0]
+            });
+            return promise;
+        }
+    };
+    return PracticeSessionService
 });
 
 //app.directive('FactInsertConsole', function(){
