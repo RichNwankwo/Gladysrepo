@@ -28,5 +28,5 @@ html(lang="en" ng-app="gladysApp")
                     section.col-md-8
                         textarea(rows="5" cols="100" ng-model="questionAnswer")
                     section.col-md-3
-                        i.fa.fa-gg.fa-2x  Submit Answer
-                        i.fa.fa-forward.fa-2x  Next Question
+                        i(ng-click="SubmitAnswer()").fa.fa-gg.fa-2x  Submit Answer
+

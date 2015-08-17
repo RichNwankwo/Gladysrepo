@@ -31,6 +31,7 @@ Route::group(['prefix' => 'api/v1', 'middleware'=>'auth.basic'], function(){
     Route::delete('fact/{fact_id}/tag/{tag_id}', 'TagFactController@destroy');
     route::post('user/{user_id}/practice_session', 'PracticeSessionController@store');
     route::post('practice_material', 'PracticeMaterialController@store');
+    Route::post('user/{user_id}/practice_session/{session_id}/material/{material_id}', 'PracticeMaterialController@store');
 
 
     

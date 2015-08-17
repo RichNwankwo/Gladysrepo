@@ -95,7 +95,7 @@ app.controller('UserInformation', function($scope, $http, UserApiService){
 
    $scope.addTag = function()
     {
-        var newTag ={
+        var newTag = {
             id: null,
             tag_name:  $scope.newTag
         }
@@ -242,7 +242,7 @@ app.factory('UserApiService', function($http){
 
 });
 
-app.controller('QuestionController', function($scope, UserApiService, PracticeSessionService){
+app.controller('QuestionController', function($scope, $http,  UserApiService, PracticeSessionService){
     var LoggedInUserID;
     UserApiService.UserData().then(function(response) {
         console.log(response);
@@ -254,6 +254,25 @@ app.controller('QuestionController', function($scope, UserApiService, PracticeSe
             $scope.currentMaterial = response;
         });
     });
+
+    $scope.SubmitAnswer = function()
+    {
+        var Answer = {
+            'answer': $scope.questionAnswer,
+            'question_id': $scope.currentMaterial.question_id
+        };
+
+        var user_id = LoggedInUserID;
+        var session_id = $scope.currentMaterial.session_id;
+        var material_id = $scope.currentMaterial.material_id;
+
+        $http.post('api/v1/user/'+user_id+'/practice_session/'+session_id+'/material/'+material_id, Answer).then(function(response){
+            $scope.currentMaterial = response.data.data[0];
+            $scope.questionAnswer = "";
+            console.log($scope.currentMaterial);
+        });
+
+    }
 
 
 });
@@ -268,6 +287,8 @@ app.factory('PracticeSessionService', function($http){
         }
     };
     return PracticeSessionService
+
+
 });
 
 //app.directive('FactInsertConsole', function(){

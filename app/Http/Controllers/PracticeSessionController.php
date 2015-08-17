@@ -10,6 +10,7 @@ use App\Models\PracticeSession;
 use App\GladysApp\Domain\PracticeSessionToolbox;
 use Illuminate\Support\Facades\Auth;
 use App\Commands\PracticeSessionStarted;
+use App\Models\PracticeMaterial;
 class PracticeSessionController extends ApiController
 {
 
@@ -54,8 +55,11 @@ class PracticeSessionController extends ApiController
         if($practice_session)
         {
             $practiceSessionToolbox = new PracticeSessionToolbox($user_id, $practice_session->id);
+            $sessionMaterial = $practiceSessionToolbox->getSessionMaterial();
+            $material_id = PracticeMaterial::create($sessionMaterial)->id;
+            $sessionMaterial['material_id'] = $material_id;
             return $this->respond([
-                'data' => [$practiceSessionToolbox->getSessionMaterial()]
+                'data' => [$sessionMaterial]
             ]);
         }
 

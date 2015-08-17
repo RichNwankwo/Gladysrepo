@@ -42,7 +42,7 @@
               <input placeholder="Tag fact" type="text" ng-model="newTag" class="form-control form-group-sm">
               <button ng-click="addTag()" class="button"><i class="fa fa-plus"></i></button>
             </section>
-            <section id="practice" class="row"><i class="fa fa-play-circle-o fa-4x"><a href="/gladys_learning"></a></i></section>
+            <section id="practice" class="row"><a href="/gladys_learning"><i class="fa fa-play-circle-o fa-4x"></i></a></section>
           </section>
         </section>
       </section>
