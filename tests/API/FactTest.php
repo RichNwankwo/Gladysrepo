@@ -68,7 +68,7 @@ class FactTest extends resourceTester {
 
         if($this->authorization_needed === TRUE)
         {
-            $this->authorizeTestUser();
+            $this->authorizeTestUser(2);
         }
 
         $resource = 'http://gladys.app/api/v1/user/26/fact/';

@@ -31,23 +31,19 @@ abstract class ApiTester extends TestCase {
         return json_decode($this->call($method, $url, $parameters)->getContent());
     }
 
-    protected function authorizeTestUser()
+    protected function authorizeTestUser($user_id = 1)
     {
-
-
-//        $user = new App\Models\User([
-//            'name' => 'Test User',
-//            'email' => 'testing@testing.com',
-//            'password' => Hash::make('testing')
-//        ]);
         $user = \App\Models\User::create([
             'name' => 'Test User',
             'email' => 'testing@testing.com',
             'password' => Hash::make('testing')
         ]);
-//        $this->be($user);
+
+        $user->id = $user_id;
+        $user->save();
+
         Session::start();
-        $user = User::find(1);
+        $user = User::find($user_id);
         Auth::login($user);
     }
 

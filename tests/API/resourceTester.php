@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 
 
-
+include_once('tests/helpers/ApiTester.php');
 class resourceTester extends ApiTester{
 
     use Factory;

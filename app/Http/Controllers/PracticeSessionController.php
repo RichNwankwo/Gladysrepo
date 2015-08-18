@@ -44,12 +44,6 @@ class PracticeSessionController extends ApiController
     public function store(Request $request, $user_id = null)
     {
 
-        $authUser = Auth::ID();
-        if($user_id != $authUser)
-        {
-            return  $this->respondUnauthorized('Unable to start session: Check authorization');
-        }
-
         $this->dispatch(new PracticeSessionStarted(Auth::user()));
         $practice_session = PracticeSession::create(['user_id'=> $user_id, 'started_at'=> date('Y-m-d H:i:s')]);
         if($practice_session)

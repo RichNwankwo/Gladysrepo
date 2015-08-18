@@ -1,6 +1,6 @@
 <?php
 
-include_once('tests/helpers/resourceTester.php');
+include_once('tests/API/resourceTester.php');
 
 class PracticeSessionTest extends ApiTester{
 

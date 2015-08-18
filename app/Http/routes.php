@@ -24,14 +24,15 @@ Route::group(['prefix' => 'api/v1', 'middleware'=>'auth.basic'], function(){
     Route::resource('tag', 'TagController');
     Route::resource('answer', 'QuestionAnswerController');
     Route::resource('question', 'QuestionController');
-    Route::get('user/{user_id}/fact', 'FactController@index');
-    Route::post('user/{user_id}/fact', 'FactController@store');
+    Route::get('user/{user_id}/fact',['middleware' => 'userResource', 'uses'=> 'FactController@index']);
+    Route::post('user/{user_id}/fact',['middleware' => 'userResource', 'uses'=>  'FactController@store']);
     Route::resource('user', 'UserController');
-    Route::post('user/{id}/fact/{fact_id}/tag', 'TagFactController@store');
-    Route::delete('fact/{fact_id}/tag/{tag_id}', 'TagFactController@destroy');
-    route::post('user/{user_id}/practice_session', 'PracticeSessionController@store');
+    Route::post('user/{user_id}/fact/{fact_id}/tag',['middleware' => 'userResource', 'uses'=>  'TagFactController@store']);
+    Route::delete('fact/{fact_id}/tag/{tag_id}',['middleware' => 'userResource', 'uses'=>  'TagFactController@destroy']);
+    route::post('user/{user_id}/practice_session',['middleware' => 'userResource', 'uses'=>  'PracticeSessionController@store']);
     route::post('practice_material', 'PracticeMaterialController@store');
-    Route::post('user/{user_id}/practice_session/{session_id}/material/{material_id}', 'PracticeMaterialController@store');
+    Route::post('user/{user_id}/practice_session/{session_id}/material/{material_id}',
+        ['middleware' => 'userResource', 'uses'=> 'PracticeMaterialController@store']);
 
 
     

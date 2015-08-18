@@ -60,19 +60,8 @@ class FactController extends ApiController
      * @param  $user_id user URI segment
      * @return Response
      */
-    // TODO ADD TEST FOR NEW USER RESOURCE
     public function store(Request $request, $user_id = null)
     {
-
-        if($user_id)
-        {
-            $authUser = Auth::ID();
-            if($authUser !=  $user_id)
-            {
-                return $this->respondForbidden("Unauthorized: Must be logged to access endpoint");
-            }
-        }
-
 
         if( ! $request->input('newFact'))
         {
