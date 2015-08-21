@@ -39,10 +39,17 @@ class QuestionSelector implements QuestionSelectorInterface {
 
         $fact = Fact::find($fact_id);
         $questions = $fact->questions;
-        // Gets a random question from 0 to max number of questions available
-        $random_question = $questions[mt_rand(0,count($questions)-1)];
-        $fact_with_question = $this->returnFactWithQuestion($fact, $random_question);
-        return $fact_with_question;
+        if($questions)
+        {
+            // Gets a random question from 0 to max number of questions available
+            $random_question = $questions[mt_rand(0,count($questions)-1)];
+            $fact_with_question = $this->returnFactWithQuestion($fact, $random_question);
+            return $fact_with_question;
+        }
+        else
+        {
+            return FALSE;
+        }
     }
 
     /**

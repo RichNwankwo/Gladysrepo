@@ -10,8 +10,8 @@
   font-size: 75%;
   height: 100vh;
   overflow: auto;
-  background-color: #E0E0E0;
-  border-color: #4CAF50;
+  background-color: #FAFAFA;
+  border-color: #FF6D00;
 }
 
 
@@ -53,7 +53,8 @@
   line-height: 120%;
   cursor: pointer;
   cursor: hand;
-  opacity: .6;
+  opacity: .7;
+
 }
 
 .factCards:hover{
@@ -70,7 +71,7 @@
 
 #factCardSearch input[type="text"]:focus {
   border: solid 1px #707070;
-  box-shadow: 0 0 5px 1px #4CAF50;
+  box-shadow: 0 0 5px 1px #FF6D00;
 }
 
 #factTextArea{
@@ -78,7 +79,15 @@
 }
 
 #factTextArea textarea:focus{
-  outline: none !important;
+//  outline: none !important;
+}
+
+
+
+textarea {
+  overflow: auto;
+  border: solid 5px #EEEEEE;
+  background-color: #FDFDFD;
 }
 
 #factTextArea textarea{
@@ -86,12 +95,16 @@
   font-size: 125%;
   overflow: auto;
   border: solid 10px #EEEEEE;
-  box-shadow: 0 0 5px 1px #4CAF50;
+  background-color: #FDFDFD;
 }
-
 #factOperations i{
   margin: 15px;
-  color: #FAFAFA;
+  color: #ffffff;
+  opacity: .7;
+}
+
+i{
+  color: #ffffff;
   opacity: .7;
 }
 #factOperations i:hover{
@@ -101,7 +114,7 @@
 }
 
 #mainApp{
-  background-color: #388E3C;
+  background-color: #607D8B;
 }
 
 .container{

@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PracticeMaterial;
 use App\Models\QuestionAnswer;
 use App\GladysApp\Domain\PracticeSessionToolbox;
-
+use App\Commands\QuestionHasBeenAnswered;
 class PracticeMaterialController extends ApiController
 {
     /**
@@ -42,7 +42,9 @@ class PracticeMaterialController extends ApiController
      * @param null $material_id
      * @return Response
      *     // TODO this would probably need a custom validator
+     * // TODO This also needs to be cleaned up
      */
+    // TODO also verify resources still belong to each other
     public function store(Request $request, $user_id = null, $session_id = null, $material_id = null)
     {
         $answer = [
@@ -52,6 +54,7 @@ class PracticeMaterialController extends ApiController
         ];
 
         $insertedAnswer = QuestionAnswer::create($answer);
+        $this->dispatch(new QuestionHasBeenAnswered($insertedAnswer, $user_id, $session_id));
         $material = PracticeMaterial::find($material_id);
         $material->answer_id = $insertedAnswer->id;
         $material->save();

@@ -14,10 +14,12 @@ class FactSelector implements FactSelectorInterface{
         $this->factTransformer = new FactTransformer();
     }
 
-    // TODO crn Put in find or fails incase we get a fact that has no questions
     public function selectRandomFact($user_id)
     {
         $facts = User::find($user_id)->facts;
+        if(!$facts){
+            return False;
+        }
         $random_fact = $facts[mt_rand(0, count($facts)-1)];
         return $this->factTransformer->transform($random_fact);
     }

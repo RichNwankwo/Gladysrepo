@@ -9,15 +9,15 @@ use App\Models\PracticeSession;
 class PracticeSessionStarted implements SelfHandling
 {
     public  $user;
+
     /**
      * Create a new command instance.
      *
-     * @param User $user_id
-     * @param Fact $fact_id
-     * @return \App\Commands\FactInserted
+     * @param User $user
+     * @internal param User $user_id
+     * @return \App\Commands\PracticeSessionStarted
      */
 
-    // TODO probably going to convert this back into injected MODELS
     public function __construct(User $user)
     {
         $this->user = $user;

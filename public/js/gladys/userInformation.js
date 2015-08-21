@@ -174,15 +174,18 @@ app.controller('UserInformation', function($scope, $http, UserApiService){
             $scope.pinnedTags.forEach(function(pinTag, index){
                 if(selectedTag.tag_name == pinTag.tag_name){
                     $scope.pinnedTags.splice(index,1);
+                    console.log($scope.pinnedTags);
                 }
                 else{
                     $scope.pinnedTags.push(selectedTag)
+                    console.log($scope.pinnedTags);
                 }
             });
         }
         else {
             $scope.pinnedTags = [];
             $scope.pinnedTags.push(selectedTag);
+            console.log($scope.pinnedTags);
         }
     }
 

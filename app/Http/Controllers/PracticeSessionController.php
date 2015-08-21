@@ -50,6 +50,10 @@ class PracticeSessionController extends ApiController
         {
             $practiceSessionToolbox = new PracticeSessionToolbox($user_id, $practice_session->id);
             $sessionMaterial = $practiceSessionToolbox->getSessionMaterial();
+            if( ! $sessionMaterial)
+            {
+                return $this->respondNotFound('Unable to start session. Make sure you have facts with questions!');
+            }
             $material_id = PracticeMaterial::create($sessionMaterial)->id;
             $sessionMaterial['material_id'] = $material_id;
             return $this->respond([

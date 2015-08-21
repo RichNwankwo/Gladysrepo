@@ -20,7 +20,6 @@ class FactInserted implements SelfHandling
      * @return \App\Commands\FactInserted
      */
 
-    // TODO probably going to convert this back into injected MODELS
     public function __construct(User $user, Fact $fact)
     {
         $this->user = $user;
@@ -39,11 +38,15 @@ class FactInserted implements SelfHandling
         // TODO this should actually be an event
         $fact_id = $this->fact->id;
         $questions =  [
-                ['fact_id' => $fact_id, 'question_title' => 'Can you create 5 questions from this fact?', 'question_type' => 1],
-                ['fact_id' => $fact_id, 'question_title' => 'Write this fact in yur own words', 'question_type' => 1],
-                ['fact_id' => $fact_id, 'question_title' => 'Write a paragraph about the fact and its related implications','question_type' => 1],
-                ['fact_id' => $fact_id, 'question_title' => 'How can you apply this to your day, or life in general?', 'question_type' => 1],
-                ['fact_id' => $fact_id, 'question_title' => 'Can you create 5 questions from this fact', 'question_type' => 1]
+                ['fact_id' => $fact_id, 'question_title' => 'Can you create a test question from this fact?', 'question_type' => 1],
+                ['fact_id' => $fact_id, 'question_title' => 'Write this fact in your own words', 'question_type' => 2],
+                ['fact_id' => $fact_id, 'question_title' => 'Write a paragraph about the fact and its related implications','question_type' => 3],
+                ['fact_id' => $fact_id, 'question_title' => 'How can you apply this to your day, or life in general?', 'question_type' => 4],
+                ['fact_id' => $fact_id, 'question_title' => 'Can you find a related fact to this fact', 'question_type' => 5],
+                ['fact_id' => $fact_id, 'question_title' => 'Can you give an example in recent new or history related to this fact', 'question_type' => 6],
+                ['fact_id' => $fact_id, 'question_title' => 'What is one key term or phrase that you can later define', 'question_type' => 7],
+                ['fact_id' => $fact_id, 'question_title' => 'How can you take action on this piece of information right this moment?', 'question_type' => 8]
+
             ];
         Question::insert($questions);
 
