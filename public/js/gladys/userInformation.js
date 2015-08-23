@@ -245,25 +245,34 @@ app.factory('UserApiService', function($http){
 
 });
 
-app.controller('QuestionController', function($scope, $http,  UserApiService, PracticeSessionService){
+app.controller('QuestionController', function($scope, $http,  UserApiService, PracticeSessionService, UsersTags){
     var LoggedInUserID;
     UserApiService.UserData().then(function(response) {
-        console.log(response);
         $scope.user = response;
         LoggedInUserID = $scope.user.user_id;
 
         PracticeSessionService.PracticeSessionMaterial(LoggedInUserID).then(function(response){
-            console.log(response);
             $scope.currentMaterial = response;
         });
+
+        UsersTags.GetUsersTags(LoggedInUserID).then(function(response){
+            console.log(response);
+            $scope.usersTags = response;
+        });
+
+
     });
+
 
     $scope.SubmitAnswer = function()
     {
         var Answer = {
             'answer': $scope.questionAnswer,
-            'question_id': $scope.currentMaterial.question_id
+            'question_id': $scope.currentMaterial.question_id,
+            'tags': JSON.stringify($scope.preferredTags)
         };
+
+        console.log(Answer.tags);
 
         var user_id = LoggedInUserID;
         var session_id = $scope.currentMaterial.session_id;
@@ -272,8 +281,17 @@ app.controller('QuestionController', function($scope, $http,  UserApiService, Pr
         $http.post('api/v1/user/'+user_id+'/practice_session/'+session_id+'/material/'+material_id, Answer).then(function(response){
             $scope.currentMaterial = response.data.data[0];
             $scope.questionAnswer = "";
-            console.log($scope.currentMaterial);
         });
+
+    }
+
+    $scope.addToTagList = function(){
+        if(! $scope.preferredTags) {
+            $scope.preferredTags = [];
+        }
+        $scope.preferredTags.push($scope.filteredTag);
+        $scope.filteredTag = "";
+        console.log($scope.preferredTags);
 
     }
 
@@ -293,6 +311,19 @@ app.factory('PracticeSessionService', function($http){
 
 
 });
+
+app.factory('UsersTags', function($http){
+    var UserTags = {
+        GetUsersTags: function(user_id){
+            var promise = $http.get('api/v1/tag').then(function(response){
+                return response.data.data;
+
+            });
+            return promise;
+        }
+    };
+    return UserTags;
+})
 
 //app.directive('FactInsertConsole', function(){
 //    return {

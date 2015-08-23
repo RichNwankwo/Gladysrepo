@@ -19,7 +19,6 @@ html(lang="en" ng-app="gladysApp")
                 section#fact.row
                     section.col-md-8
                         textarea(rows="1" cols="100") {{currentMaterial.question_title}}
-                    section.col-md-2
                 section#factReveal.row
                     i(ng-click="check=true").fa.fa-check-square-o.fa-2x Show Fact
                     div(ng-show="check" class="ng-hide")
@@ -29,4 +28,12 @@ html(lang="en" ng-app="gladysApp")
                         textarea(rows="5" cols="100" ng-model="questionAnswer")
                     section.col-md-3
                         i(ng-click="SubmitAnswer()").fa.fa-gg.fa-2x  Submit Answer
+                section()#options.row
+                    select(ng_model="filteredTag")
+                        option(ng-repeat="tag in usersTags" value="{{tag.id}}") {{tag.tag_name}}
+                    button(ng-click="addToTagList()").btn-sm Add Preferred Topic
+
+
+
+
 

@@ -12,6 +12,8 @@ use App\Models\PracticeMaterial;
 use App\Models\QuestionAnswer;
 use App\GladysApp\Domain\PracticeSessionToolbox;
 use App\Commands\QuestionHasBeenAnswered;
+use Psy\Util\Json;
+
 class PracticeMaterialController extends ApiController
 {
     /**
@@ -59,7 +61,9 @@ class PracticeMaterialController extends ApiController
         $material->answer_id = $insertedAnswer->id;
         $material->save();
         $practiceSessionToolbox = new PracticeSessionToolbox($user_id, $session_id);
-        $sessionMaterial = $practiceSessionToolbox->getSessionMaterial();
+        // TODO there needs to be a dynamic way to handle this
+        $tags = json_decode($request->input('tags'));
+        $sessionMaterial = $practiceSessionToolbox->getSessionMaterial($tags);
         $material_id = PracticeMaterial::create($sessionMaterial)->id;
         $sessionMaterial['material_id'] = $material_id;
         return $this->respond([

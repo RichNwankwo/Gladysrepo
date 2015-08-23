@@ -34,7 +34,7 @@ html(lang="en" ng-app="gladysApp")
                         section#factTags.row
                         section#tags.row
                             div.row.factTag(ng-repeat="tag in tags")
-                                span.label.label-default {{ tag.tag_name }} #[i.fa.fa-thumb-tack(ng-click="PinTag(tag)")] #[i.fa.fa-search] #[i.fa.fa-play] #[i.fa.fa-trash-o.removeTagButton(ng-click="deleteTag(tag)")]
+                                span.label.label-default {{ tag.tag_name }} #[i.fa.fa-thumb-tack(ng-click="PinTag(tag)")] #[i.fa.fa-search] #[a(ng-href="/gladys_learning/{{ tag.id }}") #[i.fa.fa-play] ] #[i.fa.fa-trash-o.removeTagButton(ng-click="deleteTag(tag)")]
                         section#addTags.row
                             form()
                             input.form-control.form-group-sm(placeholder="Tag fact" type="text" ng-model="newTag")

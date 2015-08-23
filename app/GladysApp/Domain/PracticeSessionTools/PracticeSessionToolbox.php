@@ -20,9 +20,21 @@ class PracticeSessionToolbox {
         $this->factSelector = new FactSelector();
     }
 
-    public function getSessionMaterial()
+    /**
+     * @param array $tags facts tagged with these tags only
+     * @return bool|mixed
+     */
+    public function getSessionMaterial(array $tags = [])
     {
-        $fact = $this->factSelector->selectRandomFact($this->user_id);
+        if($tags)
+        {
+            $tag_id = $tags[rand(0,count($tags)-1)];
+            $fact = $this->factSelector->selectRandomTaggedFact($this->user_id,$tag_id);
+        }
+        else
+        {
+            $fact = $this->factSelector->selectRandomFact($this->user_id);
+        }
         if($fact)
         {
             $fact_with_question = $this->questionSelector->getRandomQuestion($fact['id']);
