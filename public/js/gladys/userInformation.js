@@ -268,11 +268,13 @@ app.controller('QuestionController', function($scope, $http,  UserApiService, Pr
     {
         var Answer = {
             'answer': $scope.questionAnswer,
-            'question_id': $scope.currentMaterial.question_id,
-            'tags': JSON.stringify($scope.preferredTags)
+            'question_id': $scope.currentMaterial.question_id
         };
 
-        console.log(Answer.tags);
+        if($scope.preferredTags){
+            Answer.tags = JSON.stringify($scope.preferredTags)
+        }
+
 
         var user_id = LoggedInUserID;
         var session_id = $scope.currentMaterial.session_id;

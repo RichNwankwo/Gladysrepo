@@ -16,7 +16,9 @@ class verifyUserResource
      */
     public function handle($request, Closure $next)
     {
+        // User_id URI segment
         $user_id = $request->user_id;
+
         if ('testing' === app()->env)
         {
             $user_id = 1;

@@ -43,29 +43,31 @@ class PracticeMaterialController extends ApiController
      * @param null $session_id
      * @param null $material_id
      * @return Response
-     *     // TODO this would probably need a custom validator
-     * // TODO This also needs to be cleaned up
      */
-    // TODO also verify resources still belong to each other
     public function store(Request $request, $user_id = null, $session_id = null, $material_id = null)
     {
+
+        $valid = $this->validateSessionMaterial($user_id, $session_id, $material_id);
+        // If the material validation fails for any reason
+        if($valid == FALSE)
+        {
+            $message = "Unable to process session material. Please start a new session and try again";
+            return $this->respondUnprocessed($message);
+        }
         $answer = [
             'question_id' => $request->input('question_id'),
             'answer' => $request->input('answer'),
             'created_at' => date('Y-m-d H:i:s')
         ];
 
-        $insertedAnswer = QuestionAnswer::create($answer);
-        $this->dispatch(new QuestionHasBeenAnswered($insertedAnswer, $user_id, $session_id));
-        $material = PracticeMaterial::find($material_id);
-        $material->answer_id = $insertedAnswer->id;
-        $material->save();
-        $practiceSessionToolbox = new PracticeSessionToolbox($user_id, $session_id);
-        // TODO there needs to be a dynamic way to handle this
-        $tags = json_decode($request->input('tags'));
-        $sessionMaterial = $practiceSessionToolbox->getSessionMaterial($tags);
-        $material_id = PracticeMaterial::create($sessionMaterial)->id;
-        $sessionMaterial['material_id'] = $material_id;
+        // if we are unable to fill in an answer for the material we just answered
+        if( ! $this->createMaterialAnswer($answer, $user_id, $session_id, $material_id))
+        {
+            $message = "Unable to save answer at this time.";
+            return $this->respondUnprocessed($message);
+        }
+
+        $sessionMaterial = $this->getMaterialForNextQuestion($request->input('tags'), $user_id, $session_id, $material_id);
         return $this->respond([
             'data' => [$sessionMaterial]
         ]);
@@ -73,14 +75,31 @@ class PracticeMaterialController extends ApiController
     }
 
     /**
-     * Display the specified r  esource.
+     * Display the specified resource.
      *
-     * @param  int  $id
+     * @param $answer array post data
+     * @param $user_id user id
+     * @param $session_id session of material
+     * @param $material_id
+     * @internal param int $id
      * @return Response
      */
-    public function show($id)
+
+    protected function createMaterialAnswer(array $answer, $user_id, $session_id, $material_id)
     {
-        //
+        $insertedAnswer = QuestionAnswer::create($answer);
+        $this->dispatch(new QuestionHasBeenAnswered($insertedAnswer, $user_id, $session_id));
+        $answer_id = $insertedAnswer->id;
+        if($answer_id)
+        {
+            return $this->updateMaterialData($material_id, $answer_id);
+        }
+        else
+        {
+            return false;
+        }
+
+
     }
 
     /**
@@ -115,5 +134,80 @@ class PracticeMaterialController extends ApiController
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @param $material_id
+     * @param $insertedAnswer
+     */
+    protected function updateMaterialData($material_id, $answer_id)
+    {
+        // Get the material
+        $material = PracticeMaterial::find($material_id);
+        if($material)
+        {
+            // update answer
+            $material->answer_id = $answer_id;
+            // save
+            $material->save();
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+
+    }
+
+    /**
+     * @param array $tags
+     * @param $user_id
+     * @param $session_id
+     * @param $material_id
+     * @internal param Request $request
+     * @return bool|mixed
+     */
+    protected function getMaterialForNextQuestion($tags = null, $user_id, $session_id, $material_id)
+    {
+        $practiceSessionToolbox = new PracticeSessionToolbox($user_id, $session_id);
+
+        if($tags)
+        {
+            $tags = json_decode($tags);
+            $sessionMaterial = $practiceSessionToolbox->getSessionMaterial($tags);
+        }
+        else
+        {
+            $sessionMaterial = $practiceSessionToolbox->getSessionMaterial();
+        }
+        // Material id
+        $material_id = PracticeMaterial::create($sessionMaterial)->id;
+        $sessionMaterial['material_id'] = $material_id;
+
+        return $sessionMaterial;
+    }
+
+    public function validateSessionMaterial($user_id, $session_id, $material_id)
+    {
+        $session = PracticeSession::find($session_id);
+        if($session)
+        {
+            if($session->user_id == $user_id)
+            {
+                $material = PracticeMaterial::find($material_id);
+                if($material)
+                {
+                    if($material->session_id == $session->id)
+                    {
+                        return TRUE;
+                    }
+                }
+            }
+        }
+        return FALSE;
+
+
+
+//        $session_id == $material->session_id
     }
 }
