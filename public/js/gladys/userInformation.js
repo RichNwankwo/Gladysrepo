@@ -21,13 +21,11 @@ app.controller('UserInformation', function($scope, $http, UserApiService){
 
     var LoggedInUserID;
     UserApiService.UserData().then(function(response) {
-        console.log(response);
         $scope.user = response;
         LoggedInUserID = $scope.user.user_id;
 
 
             UserApiService.FactData($scope.user.user_id).then(function(response){
-            console.log(response);
             $scope.facts = response;
         });
     });
@@ -115,6 +113,7 @@ app.controller('UserInformation', function($scope, $http, UserApiService){
             $scope.newTag = "";
             $scope.tags == undefined ? $scope.tags = [] : "";
             $scope.tags.push(newTag);
+
         }
     }
 
@@ -174,18 +173,15 @@ app.controller('UserInformation', function($scope, $http, UserApiService){
             $scope.pinnedTags.forEach(function(pinTag, index){
                 if(selectedTag.tag_name == pinTag.tag_name){
                     $scope.pinnedTags.splice(index,1);
-                    console.log($scope.pinnedTags);
                 }
                 else{
                     $scope.pinnedTags.push(selectedTag)
-                    console.log($scope.pinnedTags);
                 }
             });
         }
         else {
             $scope.pinnedTags = [];
             $scope.pinnedTags.push(selectedTag);
-            console.log($scope.pinnedTags);
         }
     }
 
@@ -253,10 +249,10 @@ app.controller('QuestionController', function($scope, $http,  UserApiService, Pr
 
         PracticeSessionService.PracticeSessionMaterial(LoggedInUserID).then(function(response){
             $scope.currentMaterial = response;
+            console.log($scope.currentMaterial);
         });
 
         UsersTags.GetUsersTags(LoggedInUserID).then(function(response){
-            console.log(response);
             $scope.usersTags = response;
         });
 
@@ -264,8 +260,10 @@ app.controller('QuestionController', function($scope, $http,  UserApiService, Pr
     });
 
 
+
     $scope.SubmitAnswer = function()
     {
+        console.log($scope.currentMaterial);
         var Answer = {
             'answer': $scope.questionAnswer,
             'question_id': $scope.currentMaterial.question_id
@@ -283,6 +281,7 @@ app.controller('QuestionController', function($scope, $http,  UserApiService, Pr
         $http.post('api/v1/user/'+user_id+'/practice_session/'+session_id+'/material/'+material_id, Answer).then(function(response){
             $scope.currentMaterial = response.data.data[0];
             $scope.questionAnswer = "";
+            $scope.tags = [];
         });
 
     }
@@ -293,8 +292,28 @@ app.controller('QuestionController', function($scope, $http,  UserApiService, Pr
         }
         $scope.preferredTags.push($scope.filteredTag);
         $scope.filteredTag = "";
-        console.log($scope.preferredTags);
 
+    }
+
+    $scope.addTag = function()
+    {
+        console.log($scope.currentMaterial);
+        var fact_id = $scope.currentMaterial.fact_id;
+        console.log(fact_id);
+        var newTag = {
+            id: null,
+            tag_name:  $scope.newTag
+        }
+
+        if(fact_id)
+        {
+            $http.post('api/v1/user/'+LoggedInUserID+'/fact/' + fact_id + '/tag', newTag).then(function (response) {
+                newTag.id = response.data.metadata.tag_id
+                $scope.tags ? $scope.tags = $scope.tags : $scope.tags = [];
+                $scope.tags.push(newTag);
+                $scope.newTag = "";
+            });
+        }
     }
 
 

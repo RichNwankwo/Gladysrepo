@@ -23,6 +23,13 @@ html(lang="en" ng-app="gladysApp")
                     i(ng-click="check=true").fa.fa-check-square-o.fa-2x Show Fact
                     div(ng-show="check" class="ng-hide")
                         textarea(rows="5" cols="100" ng-model="currentMaterial.fact") {{currentMaterial.fact}}
+                        section()#tags.row
+                            div.row.factTag(ng-repeat="tag in tags")
+                                span.label.label-default {{ tag.tag_name }} #[i.fa.fa-thumb-tack(ng-click="PinTag(tag)")] #[i.fa.fa-search] #[a(ng-href="/gladys_learning/{{ tag.id }}") #[i.fa.fa-play] ] #[i.fa.fa-trash-o.removeTagButton(ng-click="deleteTag(tag)")]
+                        section()#addTags.row
+                            form()
+                            input.col-md-1(placeholder="Tag fact" type="text" ng-model="newTag")
+                            button.button(ng-click="addTag()") #[i.fa.fa-plus]
                 section()#question.row
                     section.col-md-8
                         textarea(rows="5" cols="100" ng-model="questionAnswer")

@@ -23,6 +23,14 @@
         <section id="factReveal" class="row"><i ng-click="check=true" class="fa fa-check-square-o fa-2x">Show Fact</i>
           <div ng-show="check" class="ng-hide">
             <textarea rows="5" cols="100" ng-model="currentMaterial.fact">{{currentMaterial.fact}}</textarea>
+            <section id="tags" class="row">
+              <div ng-repeat="tag in tags" class="row factTag"><span class="label label-default">{{ tag.tag_name }} <i ng-click="PinTag(tag)" class="fa fa-thumb-tack"></i> <i class="fa fa-search"></i> <a ng-href="/gladys_learning/{{ tag.id }}"><i class="fa fa-play"></i> </a> <i ng-click="deleteTag(tag)" class="fa fa-trash-o removeTagButton"></i></span></div>
+            </section>
+            <section id="addTags" class="row">
+              <form></form>
+              <input placeholder="Tag fact" type="text" ng-model="newTag" class="col-md-1">
+              <button ng-click="addTag()" class="button"><i class="fa fa-plus"></i></button>
+            </section>
           </div>
         </section>
         <section id="question" class="row">
