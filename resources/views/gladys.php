@@ -32,7 +32,7 @@
             <input type="hidden" ng-model="currentFactKey" value="{{currentFactKey}}">
           </form>
           <section id="factPanel" class="col-md-2">
-            <section id="factOperations" class="row"><i ng-click="enterNewFact()" class="fa fa-sticky-note-o fa-2x"> New</i><i ng-click="submit()" class="fa fa-floppy-o fa-2x"> Save</i><i ng-click="deleteFact()" class="fa fa-trash-o fa-2x"> Delete</i></section>
+            <section id="factOperations" class="row"><i ng-click="enterNewFact()" class="fa fa-sticky-note-o fa-2x"> New</i><i ng-click="submit()" class="fa fa-floppy-o fa-2x"> Save</i><i ng-click="uploadImage()" class="fa fa-picture-o fa-2x"> Image</i><i ng-click="deleteFact()" class="fa fa-trash-o fa-2x"> Delete</i></section>
             <section id="factTags" class="row"></section>
             <section id="tags" class="row">
               <div ng-repeat="tag in tags" class="row factTag"><span class="label label-default">{{ tag.tag_name }} <i ng-click="PinTag(tag)" class="fa fa-thumb-tack"></i> <i class="fa fa-search"></i> <a ng-href="/gladys_learning/{{ tag.id }}"><i class="fa fa-play"></i> </a> <i ng-click="deleteTag(tag)" class="fa fa-trash-o removeTagButton"></i></span></div>

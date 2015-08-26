@@ -14,36 +14,41 @@
     <script src="../js/gladys/userInformation.js"></script>
     <script src="../js/gladys/angular-route.js"></script>
     <body ng-controller="QuestionController" id="mainApp" class="container">
-      <section class="col-md-12">
-        <section id="fact" class="row">
-          <section class="col-md-8">
-            <textarea rows="1" cols="100">{{currentMaterial.question_title}}</textarea>
-          </section>
-        </section>
-        <section id="factReveal" class="row"><i ng-click="check=true" class="fa fa-check-square-o fa-2x">Show Fact</i>
-          <div ng-show="check" class="ng-hide">
-            <textarea rows="5" cols="100" ng-model="currentMaterial.fact">{{currentMaterial.fact}}</textarea>
-            <section id="tags" class="row">
-              <div ng-repeat="tag in tags" class="row factTag"><span class="label label-default">{{ tag.tag_name }} <i ng-click="PinTag(tag)" class="fa fa-thumb-tack"></i> <i class="fa fa-search"></i> <a ng-href="/gladys_learning/{{ tag.id }}"><i class="fa fa-play"></i> </a> <i ng-click="deleteTag(tag)" class="fa fa-trash-o removeTagButton"></i></span></div>
+      <section id="mainApp">
+        <section class="col-md-10">
+          <section id="fact" class="row">
+            <section class="col-md-8">
+              <textarea rows="1" cols="125">{{currentMaterial.question_title}}</textarea>
             </section>
-            <section id="addTags" class="row">
-              <form></form>
-              <input placeholder="Tag fact" type="text" ng-model="newTag" class="col-md-1">
-              <button ng-click="addTag()" class="button"><i class="fa fa-plus"></i></button>
-            </section>
-          </div>
-        </section>
-        <section id="question" class="row">
-          <section class="col-md-8">
-            <textarea rows="5" cols="100" ng-model="questionAnswer"></textarea>
           </section>
-          <section class="col-md-3"><i ng-click="SubmitAnswer()" class="fa fa-gg fa-2x"> Submit Answer</i></section>
-        </section>
-        <section id="options" class="row">
-          <select ng_model="filteredTag">
-            <option ng-repeat="tag in usersTags" value="{{tag.id}}">{{tag.tag_name}}</option>
-          </select>
-          <button ng-click="addToTagList()" class="btn-sm">Add Preferred Topic</button>
+          <section id="factReveal" class="row"><i ng-click="check=true" class="fa fa-check-square-o fa-2x">Show Fact</i>
+            <div ng-show="check" class="ng-hide">
+              <textarea rows="5" cols="125" ng-model="currentMaterial.fact">{{currentMaterial.fact}}</textarea>
+              <section id="tags" class="row">
+                <div ng-repeat="tag in tags" class="row factTag"><span class="label label-default">{{ tag.tag_name }} <i ng-click="PinTag(tag)" class="fa fa-thumb-tack"></i> <i class="fa fa-search"></i> <a ng-href="/gladys_learning/{{ tag.id }}"><i class="fa fa-play"></i> </a> <i ng-click="deleteTag(tag)" class="fa fa-trash-o removeTagButton"></i></span></div>
+              </section>
+              <section id="addTags" class="row">
+                <form></form>
+                <input placeholder="Tag fact" type="text" ng-model="newTag" class="col-md-1">
+                <button ng-click="addTag()" class="button"><i class="fa fa-plus"></i></button>
+              </section>
+            </div>
+          </section>
+          <section id="question" class="row">
+            <section class="col-md-8">
+              <textarea rows="5" cols="125" ng-model="questionAnswer"></textarea>
+            </section>
+          </section>
+          <section class="col-md-12 row">
+            <button ng-click="SubmitAnswer()" class="btn-lg">Submit Answer</button>
+          </section>
+          <section id="options" class="col-md-offset-5">
+            <select ng_model="filteredTag">
+              <option ng-repeat="tag in usersTags" value="{{tag.id}}">{{tag.tag_name}}</option>
+            </select>
+            <button ng-click="addToTagList()" class="btn-sm">Add Preferred Topic</button>
+            <div ng-repeat="tag in preferredTags" class="row factTag"><span class="label label-default">{{ tag.tag_name }} <i ng-click="PinTag(tag)" class="fa fa-thumb-tack"></i> <i class="fa fa-search"></i> <a ng-href="/gladys_learning/{{ tag.id }}"><i class="fa fa-play"></i> </a> <i ng-click="deleteTag(tag)" class="fa fa-trash-o removeTagButton"></i></span></div>
+          </section>
         </section>
       </section>
     </body>
