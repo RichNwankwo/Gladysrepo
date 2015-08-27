@@ -286,6 +286,22 @@ app.controller('QuestionController', function($scope, $http,  UserApiService, Pr
 
     }
 
+    $scope.SkipQuestion = function() {
+        if($scope.preferredTags){
+            var Answer = [];
+            Answer.tags = JSON.stringify($scope.preferredTags)
+        }
+        var user_id = LoggedInUserID;
+        var session_id = $scope.currentMaterial.session_id;
+        var material_id = $scope.currentMaterial.material_id;
+
+        $http.get('api/v1/user/'+user_id+'/practice_session/'+session_id+'/material/'+material_id, Answer).then(function(response){
+            $scope.currentMaterial = response.data.data[0];
+            $scope.questionAnswer = "";
+            $scope.tags = [];
+        });
+    }
+
     $scope.addToTagList = function(){
         if(! $scope.preferredTags) {
             $scope.preferredTags = [];

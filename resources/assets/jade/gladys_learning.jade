@@ -35,7 +35,10 @@ html(lang="en" ng-app="gladysApp")
                         section.col-md-8
                             textarea(rows="5" cols="125" ng-model="questionAnswer")
                     section.col-md-12.row
-                        button(ng-click="SubmitAnswer()").btn-lg Submit Answer
+                        div.row
+                            button(ng-click="SubmitAnswer()").btn-lg Submit Answer
+                        div.row
+                            button(ng-click="SkipQuestion()").btn-lg Skip
                     section()#options.col-md-offset-5
                         select(ng_model="filteredTag")
                             option(ng-repeat="tag in usersTags" value="{{tag.id}}") {{tag.tag_name}}

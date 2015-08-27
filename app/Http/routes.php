@@ -33,6 +33,8 @@ Route::group(['prefix' => 'api/v1', 'middleware'=>'auth.basic'], function(){
     route::post('practice_material', 'PracticeMaterialController@store');
     Route::post('user/{user_id}/practice_session/{session_id}/material/{material_id}',
         ['middleware' => 'userResource', 'uses'=> 'PracticeMaterialController@store']);
+    Route::get('user/{user_id}/practice_session/{session_id}/material/{material_id}',
+        ['middleware' => 'userResource', 'uses'=> 'PracticeMaterialController@index']);
 
 
     

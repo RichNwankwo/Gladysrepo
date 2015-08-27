@@ -40,7 +40,12 @@
             </section>
           </section>
           <section class="col-md-12 row">
-            <button ng-click="SubmitAnswer()" class="btn-lg">Submit Answer</button>
+            <div class="row">
+              <button ng-click="SubmitAnswer()" class="btn-lg">Submit Answer</button>
+            </div>
+            <div class="row">
+              <button ng-click="SkipQuestion()" class="btn-lg">Skip</button>
+            </div>
           </section>
           <section id="options" class="col-md-offset-5">
             <select ng_model="filteredTag">

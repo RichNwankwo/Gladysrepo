@@ -19,11 +19,19 @@ class PracticeMaterialController extends ApiController
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
+     * @param $user_id
+     * @param $session_id
+     * @param $material_id
      * @return Response
      */
-    public function index()
+    public function index(Request $request, $user_id, $session_id, $material_id)
     {
         //
+        $sessionMaterial = $this->getMaterialForNextQuestion($request->input('tags'), $user_id, $session_id, $material_id);
+        return $this->respond([
+            'data' => [$sessionMaterial]
+        ]);
     }
 
     /**
