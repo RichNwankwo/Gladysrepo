@@ -14,37 +14,38 @@ html(lang="en" ng-app="gladysApp")
         script(src="../js/gladys/userInformation.js")
         script(src="../js/gladys/angular-route.js")
 
-        body(ng-controller="QuestionController").container#mainApp
-            section#mainApp
-                section.col-md-10
+        body(ng-controller="QuestionController").container
+            section.row.col-lg-12
+                section()#mainApp.col-md-12
                     section#fact.row
-                        section.col-md-8
-                            textarea(rows="1" cols="125") {{currentMaterial.question_title}}
+                        section.col-md-8.col-md-offset-2
+                            textarea(rows="1" cols="100") {{currentMaterial.question_title}}
                     section#factReveal.row
-                        i(ng-click="check=true").fa.fa-check-square-o.fa-2x Show Fact
-                        div(ng-show="check" class="ng-hide")
-                            textarea(rows="5" cols="125" ng-model="currentMaterial.fact") {{currentMaterial.fact}}
-                            section()#tags.row
+                        section#Reveal.col-md-8.col-md-offset-2
+                            i(ng-click="check=true").fa.fa-check-square-o.fa-2x Show Fact
+                            div(ng-show="check" class="ng-hide")
+                                textarea(rows="5" cols="100" ng-model="currentMaterial.fact") {{currentMaterial.fact}}
+                                section()#tags.row
                                 div.row.factTag(ng-repeat="tag in tags")
-                                    span.label.label-default {{ tag.tag_name }} #[i.fa.fa-thumb-tack(ng-click="PinTag(tag)")] #[i.fa.fa-search] #[a(ng-href="/gladys_learning/{{ tag.id }}") #[i.fa.fa-play] ] #[i.fa.fa-trash-o.removeTagButton(ng-click="deleteTag(tag)")]
-                            section()#addTags.row
-                                form()
-                                input.col-md-1(placeholder="Tag fact" type="text" ng-model="newTag")
-                                button.button(ng-click="addTag()") #[i.fa.fa-plus]
+                                span.label.label-default {{ tag.tag_name }} #[i.fa.fa-thumb-tack(ng-click="PinTag(tag)")] #[i.fa.fa-search] #[a(ng-href="/gladys_learning/{{ tag.id }}") #[i.fa.fa-play] ] #[i.fa.fa-trash-o.removeTagButton(ng-click="deleteTag(tag)")]
+                                section()#addTags.row
+                                    form()
+                                    input.col-md-1(placeholder="Tag fact" type="text" ng-model="newTag")
+                                    button.button(ng-click="addTag()") #[i.fa.fa-plus]
                     section()#question.row
-                        section.col-md-8
-                            textarea(rows="5" cols="125" ng-model="questionAnswer")
-                    section.col-md-12.row
-                        div.row
-                            button(ng-click="SubmitAnswer()").btn-lg Submit Answer
-                        div.row
-                            button(ng-click="SkipQuestion()").btn-lg Skip
-                    section()#options.col-md-offset-5
-                        select(ng_model="filteredTag")
-                            option(ng-repeat="tag in usersTags" value="{{tag.id}}") {{tag.tag_name}}
-                        button(ng-click="addToTagList()").btn-sm Add Preferred Topic
-                        div.row.factTag(ng-repeat="tag in preferredTags")
-                            span.label.label-default {{ tag.tag_name }} #[i.fa.fa-thumb-tack(ng-click="PinTag(tag)")] #[i.fa.fa-search] #[a(ng-href="/gladys_learning/{{ tag.id }}") #[i.fa.fa-play] ] #[i.fa.fa-trash-o.removeTagButton(ng-click="deleteTag(tag)")]
+                        section.col-md-8.col-md-offset-2
+                            textarea(rows="5" cols="100" ng-model="questionAnswer")
+                    section.row
+                        section.col-md-8.col-md-offset-2
+                                button(ng-click="SubmitAnswer()").btn-lg Submit Answer
+                                button(ng-click="SkipQuestion()").btn-lg Skip
+                    section()#options.row
+                        section.col-md-8.col-md-offset-2
+                            select(ng_model="filteredTag")
+                                option(ng-repeat="tag in usersTags" value="{{tag.id}}") {{tag.tag_name}}
+                            button(ng-click="addToTagList()").btn-sm Add Preferred Topic
+                            div.row.factTag(ng-repeat="tag in preferredTags")
+                                span.label.label-default {{ tag.tag_name }} #[i.fa.fa-thumb-tack(ng-click="PinTag(tag)")] #[i.fa.fa-search] #[a(ng-href="/gladys_learning/{{ tag.id }}") #[i.fa.fa-play] ] #[i.fa.fa-trash-o.removeTagButton(ng-click="deleteTag(tag)")]
 
 
 

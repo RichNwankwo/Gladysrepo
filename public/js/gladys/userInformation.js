@@ -1,6 +1,6 @@
 var app = angular.module('gladysApp', ['ngRoute']);
 
-// TODO move view related code to seperate file
+// TODO move view related code to separate file
 // TODO CLEAN UP!!!!
 // TODO I'm thinking facts controller, tags controller or something like that
 // TODO Create TESTS
