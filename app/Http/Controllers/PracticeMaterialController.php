@@ -131,6 +131,7 @@ class PracticeMaterialController extends ApiController
     public function update(Request $request, $id)
     {
         //
+
     }
 
     /**
@@ -195,6 +196,7 @@ class PracticeMaterialController extends ApiController
         return $sessionMaterial;
     }
 
+    //TODO clean up this code
     public function validateSessionMaterial($user_id, $session_id, $material_id)
     {
         $session = PracticeSession::find($session_id);

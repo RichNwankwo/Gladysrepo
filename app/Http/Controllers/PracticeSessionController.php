@@ -41,6 +41,7 @@ class PracticeSessionController extends ApiController
      * @param  Request  $request
      * @return Response
      */
+    //TODO clean up this code
     public function store(Request $request, $user_id = null)
     {
 
