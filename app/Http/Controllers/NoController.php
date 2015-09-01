@@ -62,11 +62,10 @@ class NoController extends ApiController
         {
             return $this->setStatusCode(402)->respondWithError('Unable to accept data');
         }
-        else
-        {
-            No::create(['user_id'=>$request->input('user_id'), 'description' => $request->input('description') ]);
-            return $this->respondCreated("Data successfully added");
-        }
+
+        No::create(['user_id'=>$request->input('user_id'), 'description' => $request->input('description') ]);
+        return $this->respondCreated("Data successfully added");
+
     }
 
     /**
@@ -84,12 +83,11 @@ class NoController extends ApiController
         {
            return $this->respondNotFound('Item not found');
         }
-        else
-        {
-            return Response()->json([
-                'data' => [$this->noTransformer->transform($no)]
-            ], 200);
-        }
+
+        return Response()->json([
+           'data' => [$this->noTransformer->transform($no)]
+        ], 200);
+
     }
 
     /**

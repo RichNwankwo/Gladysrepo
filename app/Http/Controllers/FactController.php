@@ -127,12 +127,12 @@ class FactController extends ApiController
         {
             return $this->respondNotFound();
         }
-        else
-        {
-            $fact->fact = $request->input('newFact');
-            $fact->save();
-            return $this->respondCreated();
-        }
+
+
+        $fact->fact = $request->input('newFact');
+        $fact->save();
+        return $this->respondCreated();
+
     }
 
     /**
@@ -162,10 +162,8 @@ class FactController extends ApiController
             $user = User::find($user_id);
             $user ? $facts = $user->facts : $facts = null;
         }
-        else
-        {
-            $facts = Fact::all();
-        }
+
+        $facts = Fact::all();
         return $facts;
     }
 }

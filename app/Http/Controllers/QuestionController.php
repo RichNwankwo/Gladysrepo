@@ -55,13 +55,11 @@ class QuestionController extends ApiController
         {
             return $this->respondUnprocessed();
         }
-        else
-        {
-            Question::create(['question_title' => $request->input('question_title'),
-                'question_type' => $request->input('question_type'),
-                'fact_id' => $request->input('fact_id')]);
-            return $this->respondCreated("Data successfully created");
-        }
+        Question::create(['question_title' => $request->input('question_title'),
+            'question_type' => $request->input('question_type'),
+            'fact_id' => $request->input('fact_id')]);
+        return $this->respondCreated("Data successfully created");
+
     }
 
     /**
@@ -78,12 +76,10 @@ class QuestionController extends ApiController
         {
             return $this->respondNotFound('Item Not Found');
         }
-        else
-        {
-            return $this->respond([
-                'data' => [$this->questionTransformer->transform($question)]
-            ]);
-        }
+        return $this->respond([
+            'data' => [$this->questionTransformer->transform($question)]
+        ]);
+
 
     }
 

@@ -98,14 +98,13 @@ class PracticeMaterialController extends ApiController
         $insertedAnswer = QuestionAnswer::create($answer);
         $this->dispatch(new QuestionHasBeenAnswered($insertedAnswer, $user_id, $session_id));
         $answer_id = $insertedAnswer->id;
-        if($answer_id)
-        {
-            return $this->updateMaterialData($material_id, $answer_id);
-        }
-        else
+        if( ! $answer_id)
         {
             return false;
+
         }
+
+        return $this->updateMaterialData($material_id, $answer_id);
 
 
     }
@@ -153,18 +152,17 @@ class PracticeMaterialController extends ApiController
     {
         // Get the material
         $material = PracticeMaterial::find($material_id);
-        if($material)
-        {
-            // update answer
-            $material->answer_id = $answer_id;
-            // save
-            $material->save();
-            return TRUE;
-        }
-        else
+        if( ! $material)
         {
             return FALSE;
         }
+
+        // update answer
+        $material->answer_id = $answer_id;
+        // save
+        $material->save();
+        return TRUE;
+
 
     }
 
@@ -179,16 +177,9 @@ class PracticeMaterialController extends ApiController
     protected function getMaterialForNextQuestion($tags = null, $user_id, $session_id, $material_id)
     {
         $practiceSessionToolbox = new PracticeSessionToolbox($user_id, $session_id);
+        $tags = json_decode($tags);
+        $sessionMaterial = $practiceSessionToolbox->getSessionMaterial($tags);
 
-        if($tags)
-        {
-            $tags = json_decode($tags);
-            $sessionMaterial = $practiceSessionToolbox->getSessionMaterial($tags);
-        }
-        else
-        {
-            $sessionMaterial = $practiceSessionToolbox->getSessionMaterial();
-        }
         // Material id
         $material_id = PracticeMaterial::create($sessionMaterial)->id;
         $sessionMaterial['material_id'] = $material_id;

@@ -38,12 +38,11 @@ class TagController extends ApiController
         {
             return $this->respondNotFound();
         }
-        else
-        {
-            return $this->respond([
-                'data' => $this->tagTransformer->transformCollection($tags->toArray())
-            ]);
-        }
+
+        return $this->respond([
+            'data' => $this->tagTransformer->transformCollection($tags->toArray())
+        ]);
+
 
     }
 
@@ -71,12 +70,11 @@ class TagController extends ApiController
         {
             return $this->respondUnprocessed();
         }
-        else
-        {
-            $tag_name = $request->input('tag_name');
-             Tag::create(['tag_name' => $tag_name]);
-             return $this->respondCreated();
-        }
+
+        $tag_name = $request->input('tag_name');
+        Tag::create(['tag_name' => $tag_name]);
+        return $this->respondCreated();
+
     }
 
     /**
@@ -94,12 +92,10 @@ class TagController extends ApiController
         {
             return $this->respondNotFound();
         }
-        else
-        {
-            return $this->respond([
-                'data' => [$this->tagTransformer->transform($tag->toArray())]
-            ]);
-        }
+        return $this->respond([
+            'data' => [$this->tagTransformer->transform($tag->toArray())]
+        ]);
+
     }
 
     /**
@@ -147,10 +143,7 @@ class TagController extends ApiController
             $fact = Fact::find($factId);
             $fact ? $tags = $fact->tags : $tags = null;
         }
-        else
-        {
-            $tags = Tag::all();
-        }
+        $tags = Tag::all();
         return $tags;
     }
 }

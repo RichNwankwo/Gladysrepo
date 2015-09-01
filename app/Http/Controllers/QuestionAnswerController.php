@@ -56,15 +56,13 @@ class QuestionAnswerController extends ApiController
         {
             return $this->respondUnprocessed();
         }
-        else
-        {
 
-            QuestionAnswer::create(['answer' => $request->input('answer'),
-                'question_id' => $request->input('question_id'),
-                'checked'=>$request->input('checked')]);
-            return $this->respondCreated("Data successfully created");
+        QuestionAnswer::create(['answer' => $request->input('answer'),
+            'question_id' => $request->input('question_id'),
+            'checked'=>$request->input('checked')]);
 
-        }
+        return $this->respondCreated("Data successfully created");
+
     }
 
     /**
@@ -81,12 +79,11 @@ class QuestionAnswerController extends ApiController
         {
             return $this->respondNotFound('Item Not Found');
         }
-        else
-        {
-            return $this->respond([
-                'data' => [$this->questionAnswerTransformer->transform($questionAnswer)]
-            ]);
-        }
+
+        return $this->respond([
+            'data' => [$this->questionAnswerTransformer->transform($questionAnswer)]
+        ]);
+
 
     }
 
