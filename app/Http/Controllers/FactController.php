@@ -161,6 +161,7 @@ class FactController extends ApiController
         {
             $user = User::find($user_id);
             $user ? $facts = $user->facts : $facts = null;
+            return $facts;
         }
 
         $facts = Fact::all();
