@@ -14,7 +14,7 @@ class AddRelevancyColumn extends Migration
     {
         Schema::table('fact', function(Blueprint $table){
 
-            $table->integer('relevancy');
+            $table->integer('relevancy')->nullable();
 
         });
     }
@@ -29,7 +29,7 @@ class AddRelevancyColumn extends Migration
         //
         Schema::table('fact', function(Blueprint $table){
 
-            $table->removeColumn('relevancy');
+            $table->dropColumn('relevancy');
 
         });
     }

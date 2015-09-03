@@ -31,5 +31,6 @@ class CreatePracticeSesssionMaterialTable extends Migration
     public function down()
     {
         //
+        Schema::drop('practice_session_material');
     }
 }
