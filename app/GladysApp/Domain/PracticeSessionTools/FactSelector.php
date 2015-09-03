@@ -31,6 +31,12 @@ class FactSelector implements FactSelectorInterface{
         return $this->transformAndReturnFact($facts);
     }
 
+    public function select_unique_fact($user_id, $excludes)
+    {
+        $facts = User::find($user_id)->facts()->whereNotIn('id', $excludes)->get();
+        return $this->transformAndReturnFact($facts);
+    }
+
     /**
      * @param $facts
      * @return array|bool

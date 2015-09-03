@@ -3,9 +3,8 @@
 use  App\Models\Fact;
 use App\Models\User;
 use App\Models\Tag;
+
 class FactSelectorTest extends TestCase{
-
-
 
     public function setUp()
     {
@@ -15,20 +14,9 @@ class FactSelectorTest extends TestCase{
 
     public function testIf_fact_is_selected()
     {
-        $user = \App\Models\User::create([
-            'name' => 'Test User',
-            'email' => 'testing@testing.com',
-            'password' => Hash::make('testing')
-        ]);
+        $user = $this->getTestUser();
 
-        Fact::insert([
-            ['user_id'=> $user->id, 'fact'=> 'I provide that new new'],
-            ['user_id'=> $user->id, 'fact'=> 'I provide that new new'],
-            ['user_id'=> $user->id, 'fact'=> 'I provide that new new'],
-            ['user_id'=> $user->id, 'fact'=> 'I provide that new new'],
-            ['user_id'=> $user->id, 'fact'=> 'I provide that new new'],
-            ['user_id'=> $user->id, 'fact'=> 'I provide that new new']
-        ]);
+        $this->mockFacts($user, 5);
 
         $this->factSelector = new \App\GladysApp\Domain\FactSelector();
         $fact = $this->factSelector->selectRandomFact($user->id);
@@ -39,20 +27,8 @@ class FactSelectorTest extends TestCase{
 
     public function test_If_random_tagged_fact_is_selected()
     {
-        $user = \App\Models\User::create([
-            'name' => 'Test User',
-            'email' => 'testing@testing.com',
-            'password' => Hash::make('testing')
-        ]);
-
-        Fact::insert([
-            ['user_id'=> $user->id, 'fact'=> 'I believe I can fly'],
-            ['user_id'=> $user->id, 'fact'=> 'I provide that new new'],
-            ['user_id'=> $user->id, 'fact'=> 'A love supreme'],
-            ['user_id'=> $user->id, 'fact'=> 'Going back to honolulu'],
-            ['user_id'=> $user->id, 'fact'=> 'Jesus Walks'],
-            ['user_id'=> $user->id, 'fact'=> 'Ride pipe like bike like YOKOHAMA']
-        ]);
+        $user = $this->getTestUser();
+        $this->mockFacts($user, 5);
 
         $tag_id = Tag::create(['tag_name'=> 'Test Tag'])->id;
 
@@ -71,8 +47,50 @@ class FactSelectorTest extends TestCase{
         $this->assertEquals(1,$taggedFact->tag_id);
 
 
+    }
 
+    public function testIf_all_facts_are_selected_in_a_session()
+    {
+        $user = $this->getTestUser();
+        $this->mockFacts($user, 20);
 
+        $factSelector = new \App\GladysApp\Domain\FactSelector();
+        $count = 20;
+        $fact_ids = [];
+        while($count --)
+        {
+            $fact = $factSelector->select_unique_fact($user->id, $fact_ids);
+            $fact_ids[] = intval($fact['id']);
+        }
+        sort($fact_ids);
+        $this->assertEquals(range(1,20), $fact_ids);
+
+    }
+
+    /**
+     * @return static
+     */
+    protected function getTestUser()
+    {
+        $user = \App\Models\User::create([
+            'name' => 'Test User',
+            'email' => 'testing@testing.com',
+            'password' => Hash::make('testing')
+        ]);
+
+        return $user;
+    }
+
+    /**
+     * @param $user
+     * @param $quantity
+     */
+    protected function mockFacts($user, $quantity)
+    {
+        while($quantity--)
+        {
+            Fact::create(['user_id' => $user->id, 'fact' => 'I provide that new new']);
+        }
 
     }
 
