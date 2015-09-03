@@ -24,7 +24,7 @@ class PracticeSessionToolbox {
      * @param array $tags facts tagged with these tags only
      * @return bool|mixed
      */
-    public function getSessionMaterial(array $tags = [])
+    public function getSessionMaterial($tags = [])
     {
         if($tags)
         {
