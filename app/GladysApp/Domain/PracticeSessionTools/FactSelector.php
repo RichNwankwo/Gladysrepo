@@ -24,9 +24,9 @@ class FactSelector implements FactSelectorInterface{
     public function selectRandomTaggedFact($user_id, $tag_id)
     {
         $tagged_facts = TaggedFact::whereRaw("tag_id = $tag_id")->get();
-        foreach($tagged_facts as $t_g)
+        foreach($tagged_facts as $tagged_fact)
         {
-            $facts[] = $t_g->fact;
+            $facts[] = $tagged_fact->fact;
         }
         return $this->transformAndReturnFact($facts);
     }
