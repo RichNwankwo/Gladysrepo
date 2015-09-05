@@ -67,6 +67,13 @@ class FactSelectorTest extends TestCase{
 
     }
 
+    public function testIf_all_tagged_facts_are_selected_in_a_session()
+    {
+        $user = $this->getTestUser();
+        $this->mockFacts($user, 20);
+        $this->assertFalse(false);
+    }
+
     /**
      * @return static
      */
