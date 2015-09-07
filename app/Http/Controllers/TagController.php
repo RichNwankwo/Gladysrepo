@@ -142,6 +142,7 @@ class TagController extends ApiController
         {
             $fact = Fact::find($factId);
             $fact ? $tags = $fact->tags : $tags = null;
+            return $tags;
         }
         $tags = Tag::all();
         return $tags;
