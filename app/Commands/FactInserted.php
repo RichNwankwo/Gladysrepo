@@ -67,7 +67,8 @@ class FactInserted implements SelfHandling
                 ['fact_id' => $fact_id, 'question_title' => 'How can this idea set you apart from most people', 'question_type' => 28],
                 ['fact_id' => $fact_id, 'question_title' => 'How can remember this idea for future?', 'question_type' => 29],
                 ['fact_id' => $fact_id, 'question_title' => 'Slowly re-read this idea', 'question_type' => 30],
-                ['fact_id' => $fact_id, 'question_title' => 'Defend the merit of this idea.', 'question_type' => 31]
+                ['fact_id' => $fact_id, 'question_title' => 'Defend the merit of this idea.', 'question_type' => 31],
+                ['fact_id' => $fact_id, 'question_title' => 'Can you provide an alternative interpretation of this idea', 'question_type' => 32],
 
 
 
