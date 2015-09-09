@@ -31,6 +31,7 @@ Route::group(['prefix' => 'api/v1', 'middleware'=>'auth.basic'], function(){
     Route::delete('fact/{fact_id}/tag/{tag_id}',['middleware' => 'userResource', 'uses'=>  'TagFactController@destroy']);
     route::post('user/{user_id}/practice_session',['middleware' => 'userResource', 'uses'=>  'PracticeSessionController@store']);
     route::post('practice_material', 'PracticeMaterialController@store');
+    Route::post('user/{user_id}/practice_session/{session_id}/session_type/{session_type}',['middleware'=> 'userResource', 'uses' => 'PracticeSessionController@edit']);
     Route::post('user/{user_id}/practice_session/{session_id}/material/{material_id}',
         ['middleware' => 'userResource', 'uses'=> 'PracticeMaterialController@store']);
     Route::get('user/{user_id}/practice_session/{session_id}/material/{material_id}',

@@ -78,12 +78,21 @@ class PracticeSessionController extends ApiController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param $session_id
+     * @param $session_type
      * @return Response
+     * @internal param int $id
      */
-    public function edit($id)
+    public function edit($user_id, $session_id, $session_type)
     {
-        //
+        $practiceSession = PracticeSession::find($session_id);
+        if( ! $practiceSession)
+        {
+            return $this->respondNotFound('Unable to find session');
+        }
+
+        $practiceSession->session_type = $session_type;
+        $practiceSession->save();
     }
 
     /**

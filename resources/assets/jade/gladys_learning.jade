@@ -46,7 +46,10 @@ html(lang="en" ng-app="gladysApp")
                             button(ng-click="addToTagList()").btn-sm Add Preferred Topic
                             div.row.factTag(ng-repeat="tag in preferredTags")
                                 span.label.label-default {{ tag.tag_name }} #[i.fa.fa-thumb-tack(ng-click="PinTag(tag)")] #[i.fa.fa-search] #[a(ng-href="/gladys_learning/{{ tag.id }}") #[i.fa.fa-play] ] #[i.fa.fa-trash-o.removeTagButton(ng-click="deleteTag(tag)")]
-
+                            select(ng_model="sessionType")
+                                option(value=1) Random
+                                option(value=2) Random All
+                            button(ng-click="setSessionType()").btn-sm Change Session Type
 
 
 
