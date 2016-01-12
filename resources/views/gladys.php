@@ -14,7 +14,7 @@
     <script src="../js/gladys/userInformation.js"></script>
     <script src="../js/gladys/angular-route.js"></script>
   </head>
-  <body ng-controller="UserInformation" class="container">
+  <body ng-controller="UserInformation" class="container-fluid">
     <section id="header" class="row"></section>
     <section id="mainApp" class="row">
       <section id="sidebar" class="col-xs-2">
