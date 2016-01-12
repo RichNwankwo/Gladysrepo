@@ -53,6 +53,11 @@
               </select>
               <button ng-click="addToTagList()" class="btn-sm">Add Preferred Topic</button>
               <div ng-repeat="tag in preferredTags" class="row factTag"><span class="label label-default">{{ tag.tag_name }} <i ng-click="PinTag(tag)" class="fa fa-thumb-tack"></i> <i class="fa fa-search"></i> <a ng-href="/gladys_learning/{{ tag.id }}"><i class="fa fa-play"></i> </a> <i ng-click="deleteTag(tag)" class="fa fa-trash-o removeTagButton"></i></span></div>
+              <select ng_model="sessionType">
+                <option value="1">Random</option>
+                <option value="2">Random All</option>
+              </select>
+              <button ng-click="setSessionType()" class="btn-sm">Change Session Type</button>
             </section>
           </section>
         </section>

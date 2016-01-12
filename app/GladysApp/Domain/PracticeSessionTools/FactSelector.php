@@ -3,6 +3,7 @@
 
 namespace App\GladysApp\Domain;
 use App\GladysApp\Transformers\FactTransformer;
+use App\Models\Fact;
 use App\Models\TaggedFact;
 use App\Models\User;
 
@@ -35,6 +36,20 @@ class FactSelector implements FactSelectorInterface{
     {
         $facts = User::find($user_id)->facts()->whereNotIn('id', $excludes)->get();
         return $this->transformAndReturnFact($facts);
+    }
+
+    public function select_unique_tagged_fact($user_id, $tag_id, $excludes)
+    {
+
+        $facts = Fact::with(array('taggedFact'=> function($query) use ($tag_id)
+        {
+            $query->where('tag_id', '=', $tag_id);
+        }
+        ))->where('user_id', '=', $user_id)->whereNotIn('id', $excludes)->get();
+
+        return $this->transformAndReturnFact($facts);
+
+
     }
 
     /**

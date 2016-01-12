@@ -302,6 +302,17 @@ app.controller('QuestionController', function($scope, $http,  UserApiService, Pr
         });
     }
 
+    $scope.setSessionType = function(){
+
+        if($scope.sessionType)
+        {
+            var session_type = $scope.sessionType;
+            var user_id = LoggedInUserID;
+            var session_id = $scope.currentMaterial.session_id;
+            $http.post('api/v1/user/'+user_id+'/practice_session/'+session_id+'/session_type/'+session_type);
+        }
+    }
+
     $scope.addToTagList = function(){
         if(! $scope.preferredTags) {
             $scope.preferredTags = [];
